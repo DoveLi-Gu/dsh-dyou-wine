@@ -10,8 +10,8 @@
 - 新增 22 项真实 HTTP／Cordis 生命周期测试和媒体请求失败的浏览器回归；更新真实宿主的图片、音乐 HTTP 与来源哈希检查。
 - dsh.pub 投稿和 Topic 的原检查逻辑在本地验证分发文件；这不代表被远程市场收录。最终验收及安装结果见 `docs/TESTING.md`。
 - 首次公开 GitHub 源码、Alpha.13 tag 与发行附件，并设置 9 个发现／分类 topics；复核新增自动目录，无需虚增 TUI 兼容或添加无效识别字段。
-- 将原验收 tarball 发布为 `dsh-dyou-wine@0.1.0-alpha.13`，公开 Registry 已确认版本与完整性值；首次发包自动生成的 `latest` 标签待完成 npm 二次验证后移除，当前仍应固定 Alpha 版本安装。
-- 提交 dsh.pub PR #144（已合并，目录已生成并提交，网站部署待确认）、ydhrdh PR #17，以及 DSHPlugin.io Issue #36 和 dsh-plugin.org Issue #281；DSH Marketplace 表单已接收，等待人工审核。其余审核、站点验证与准入条件见 `docs/MARKETPLACE.md`。
+- 将原验收 tarball 发布为 `dsh-dyou-wine@0.1.0-alpha.13`，公开 Registry 已确认版本与完整性值；更正标签状态：维护者本次验证已成功，Registry 仍以 HTTP 400 拒绝删除 `latest`，当前保留 `alpha`／`latest` 双标签，版本仍为 Alpha，推荐精确版本安装。
+- 完成两个 PR、三个 Issue 和两个网页表单投稿：dsh.pub PR #144 已合并并在线收录（社区投稿）；ydhrdh PR #17、DSHPlugin.io Issue #36、dsh-plugin.org Issue #281、dsh.market Issue #255 及 DSH Marketplace／dshx 表单待审核、检测或运营处理。其余入口与准入条件见 `docs/MARKETPLACE.md`。
 
 ## 0.1.0-alpha.12 — 2026-10-18
 

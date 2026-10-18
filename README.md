@@ -16,7 +16,7 @@ Alpha.9 将原梗 BGM 改为内置音频，移除左下角视频。设置沿用 
 
 已保留 npm 的 `dsh-plugin` 关键词、`dsh.bundle`、经过验证的 `engines.dsh`、图标与中英文名称说明，并补充 Web profile／重启／安装步骤的社区市场声明。根目录 `screenshots.json` 指向真实演示画面，供支持它的市场读取。
 
-远程仓库已设置 **`dsh-plugin` Topic** 及其余 8 个相关主题；本地关键词不能代替远程仓库主题。dsh.pub 的 [投稿 PR #144](https://github.com/dsh-pub/dsh-pub/pull/144) 已合并，[目录已生成并提交](https://github.com/dsh-pub/dsh-pub/commit/4113d9e47a2fe66a1d027b3c550a0db61a405c1e)，网站部署待确认；[ydhrdh PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17)、[DSHPlugin.io Issue #36](https://github.com/tjsdyy/dshplugin/issues/36) 和 [dsh-plugin.org Issue #281](https://github.com/dshplugin/dsh-plugin-hub/issues/281) 待维护者处理。其他市场的自动扫描、表单与准入限制见 [市场状态](docs/MARKETPLACE.md)；投稿不等于人工审核。
+远程仓库已设置 **`dsh-plugin` Topic** 及其余 8 个相关主题；本地关键词不能代替远程仓库主题。已完成两个 PR、三个 Issue 和两个网页表单投稿：[dsh.pub 已收录](https://dsh.pub/zh/plugins/dsh-dyou-wine/)，标记为社区投稿；[ydhrdh PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17)、[DSHPlugin.io Issue #36](https://github.com/tjsdyy/dshplugin/issues/36)、[dsh-plugin.org Issue #281](https://github.com/dshplugin/dsh-plugin-hub/issues/281)、[dsh.market Issue #255](https://github.com/2BingLing/dsh-market/issues/255) 及 DSH Marketplace／dshx 表单待审核、检测或运营处理。其他入口与准入限制见 [市场状态](docs/MARKETPLACE.md)；社区投稿和自动契约检查不等于人工审核。
 
 ## 使用条件
 
@@ -32,7 +32,7 @@ Alpha.9 将原梗 BGM 改为内置音频，移除左下角视频。设置沿用 
 dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13 --ignore-scripts
 ```
 
-这是 Alpha。首次发包后 Registry 同时存在 `alpha` 和 `latest` 标签；移除自动创建的 `latest` 正等待维护者完成 npm 二次验证。固定上述版本可避免依赖标签变化。
+这是 Alpha。Registry 当前的 `alpha` 和 `latest` 均指向本版；维护者验证成功后，Registry 仍以 HTTP 400 拒绝删除 `latest`，暂保留双标签。请固定上述版本安装，标签不代表稳定性验收。
 
 也可安装 GitHub 发行包：
 

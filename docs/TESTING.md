@@ -18,7 +18,9 @@
 
 完整资源 HTTP、隔离 Host、录制及最终文件哈希证据集中于 `.qa/release-alpha13/`；本机日常更新与内置浏览器预览独立记录于 `.qa/deployment/static-alpha13/installation.json`，不由隔离测试推断。未重新运行 60 秒性能对照或干净副本构建；旧版本结果单列。
 
-本轮发布检验：GitHub main [Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101981624) 通过；原验收 tarball 发布到 npm 后，公开 Registry 已确认版本、21 文件及与原包一致的完整性值，证据 `.qa/npm-publish/registry.json`。首次发包生成的 `latest` 待 npm 二次验证后移除。dsh.pub [远程投稿验证](https://github.com/dsh-pub/dsh-pub/actions/runs/39107411742) 通过、PR #144 已合并；ydhrdh 的隔离上游校验及构建通过，远程 fork 工作流待维护者批准。其他目录的审核与展示不能从这些结果推断。
+本轮发布检验：GitHub main [Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101981624) 通过；原验收 tarball 发布到 npm 后，公开 Registry 已确认版本、21 文件及与原包一致的完整性值，证据 `.qa/npm-publish/registry.json`。维护者本次安全密钥验证已成功，随后删除 `latest` 仍被 Registry 以 HTTP 400 拒绝；公开查询确认 `alpha`／`latest` 均指向 Alpha.13，当前保留双标签并推荐精确版本安装。dsh.pub [远程投稿验证](https://github.com/dsh-pub/dsh-pub/actions/runs/39107411742) 通过、PR #144 已合并；ydhrdh 的隔离上游校验及构建通过，远程 fork 工作流待维护者批准。其他目录的审核与展示不能从这些结果推断。
+
+发布状态文档提交 `8465bb3` 的 [CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39109024144) 已完成且成功；该提交更新说明及本地校验输出，运行时代码与公开 tarball 未变。
 
 ## Alpha.12 市场发现准备检验
 

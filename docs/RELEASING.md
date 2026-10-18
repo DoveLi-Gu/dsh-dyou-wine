@@ -37,9 +37,11 @@ Alpha.10 已通过干净副本安装与独立构建、47 项单元测试、36 �
 
 2026-10-18，维护者完成 npm 登录与安全密钥验证后，使用原已验收的 Alpha.13 tarball 执行 `npm publish ./dsh-dyou-wine-0.1.0-alpha.13.tgz --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org/`。公开 Registry 已确认版本、21 文件及与原包一致的 SRI／SHA1；此后文档更新没有重打包或覆盖该版本。包内文档保留发布前快照，当前状态以仓库为准。
 
-首次发包仍自动出现 `latest`，当前 `alpha` 与 `latest` 均指向 Alpha.13；移除 `latest` 需再次完成 npm 安全密钥验证，维护者暂待处理，不能宣称只剩 alpha。安装时固定 `@0.1.0-alpha.13`。后续预发布继续使用 `--tag alpha`，发布后核查公开 Registry 的实际 dist-tags 和完整性值；CLI 接受请求不代表 Registry 已可读取。同一 `name@version` 无法覆盖重发。
+首次发包仍自动出现 `latest`，当前 `alpha` 与 `latest` 均指向 Alpha.13。维护者本次安全密钥验证已成功，但随后删除 `latest` 的请求被 Registry 以 HTTP 400 拒绝；此前归因为“验证尚未完成，完成后即可移除”不准确。当前保留双标签，版本仍为 Alpha，安装时固定 `@0.1.0-alpha.13`。
 
-本次标签清理请求最后返回 HTTP 400，未完成删除；待维护者方便时重新发起验证与清理，再读取公开 dist-tags 确认结果。该请求失败不影响已公开的确切版本。
+[npm CLI issue #8490](https://github.com/npm/cli/issues/8490) 记录了首发自定义标签仍出现 `latest`、删除返回 400 的同类现象；[pnpm 固定版本源码](https://github.com/pnpm/pnpm/blob/9a09d43423d35092057e8ce0fda0c6b0ea0ecbcc/pnpm11/registry-access/commands/src/distTag.ts) 也显式拒绝删除 `latest`。这些资料与本次实测不等于已确认 npm 所有场景下的永久规则，不承诺仅凭再次验证就可删除。后续预发布继续使用 `--tag alpha`，发布后读取公开 Registry 的实际 dist-tags 和完整性值，不保证只存在 alpha；CLI 接受请求不代表 Registry 已可读取。同一 `name@version` 无法覆盖重发。
+
+本次安全密钥验证已成功，随后标签清理请求仍返回 HTTP 400，删除未完成；不承诺重复验证能解决该问题。已公开的确切版本不受影响。
 
 ## 后续 OIDC 发布
 
