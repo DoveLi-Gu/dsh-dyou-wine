@@ -147,13 +147,13 @@ allowBuilds:
 <details>
 <summary><strong>发布状态、市场收录与开发验收</strong></summary>
 
-Alpha.14 是 README 同步版，编译入口、玩偶图片和音频与 Alpha.13 逐字节一致。后续预发布继续使用 `alpha`；当前仍为 Alpha，请按上方确切版本安装。Alpha.13 首次公开时，Registry 在维护者验证成功后仍以 HTTP 400 拒绝删除 `latest`；该历史记录不代表当前标签状态。
+Alpha.14 已公开，是 README 同步版；编译入口、玩偶图片和音频与 Alpha.13 逐字节一致。公开 `alpha`／`latest` 均指向 Alpha.14；版本仍是 Alpha，请按上方确切版本安装。Alpha.13 首次公开时删除 `latest` 返回 HTTP 400 的记录保留为历史。
 
 npm 的 README 随版本保存，GitHub main 的文案更新不会改写旧包。这次通过新的 Alpha.14 包同步说明，原 Alpha.13 版本、tag 和发行附件保留。最新发布记录见 [更新公告](CHANGELOG.md)。
 
 市场发现保留 `dsh-plugin` npm 关键词、`dsh.bundle`、已验证的 `engines.dsh`、中英文名称说明和图标；根 `screenshots.json` 指向真实画面。远程已设置 `dsh-plugin` Topic 与另外 8 个相关主题。
 
-累计完成两个 PR、三个 Issue 和两个网页表单投稿：[dsh.pub 已收录](https://dsh.pub/zh/plugins/dsh-dyou-wine/)，标记为社区投稿；[ydhrdh PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17)、[DSHPlugin.io Issue #36](https://github.com/tjsdyy/dshplugin/issues/36)、[dsh-plugin.org Issue #281](https://github.com/dshplugin/dsh-plugin-hub/issues/281)、[dsh.market Issue #255](https://github.com/2BingLing/dsh-market/issues/255) 和 DSH Marketplace／dshx 表单待审核、检测或运营处理。其他入口、Hub 维护者反馈与准入条件见 [市场状态](docs/MARKETPLACE.md)；社区投稿和自动契约检查不等于人工审核。
+累计八项正式投稿（三个 PR、三个 Issue、两个网页表单）。[dsh.pub](https://dsh.pub/zh/plugins/dsh-dyou-wine/)、w211 与 [dshplugin.online](https://dshplugin.online/plugins/doveli-gu--dsh-dyou-wine) 已可查到 Alpha.13 快照，dsh-find-plugin 的实时 Community 搜索也能找到本插件；最新 Alpha.14 尚未同步到这些静态目录。本轮更新原三个 Issue 和 [ydhrdh PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17) 的版本资料，另补投 [Britneycode PR #1](https://github.com/Britneycode/dsh-update-center/pull/1)。其余审核、表单队列、Hub 预检故障与 Awesome 准入限制见 [市场状态](docs/MARKETPLACE.md)；社区来源和自动契约检查不等于人工审核。
 
 开发命令：
 

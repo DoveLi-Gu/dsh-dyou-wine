@@ -15,6 +15,18 @@
 
 本次未重跑真实 DSH、60 秒性能对照或物理扬声器验收，也未更新用户日常 DSH。运行入口和媒体逐字节相同，真实宿主功能证据沿用下方单列的 Alpha.13 历史，不能称为本版新实测。原包、tag 与七项市场回执保留，市场条目未因此自动完成新版审核。
 
+## 2026-10-18 市场状态再审计
+
+本轮仅更新 GitHub 状态文档和第三方目录投稿材料，不修改插件版本、运行时代码或素材，不重发 npm。Alpha.14 公开版本为 `0.1.0-alpha.14`，Git tag 指向 `611f4e7d8e8d71f22c60e9cfa4b374c97bc20c56`；公开 `alpha`／`latest` 均指向 Alpha.14。历史发布产物不覆盖。
+
+- 原三个 Issue 正文与 ydhrdh PR #17 已更新 Alpha.14，未重复创建；新提交 Britneycode PR #1 后累计八项正式投稿。Hub 维护者反馈不计为正式候选。
+- ydhrdh 按其固定上游执行 8／8 条目校验与构建通过，远程 fork CI 为 `action_required`；Britneycode 补漏只修改 extras 数据，21 项相关测试通过。这些结果属于第三方市场材料验证，不是本插件重新测试，也不替代维护者审核。
+- dsh.pub 官方 API 返回固定 Alpha.13 来源与可安装标记；w211 实际目录与 dshplugin.online 网页显示 Alpha.13 快照。dsh-find-plugin 未修改的上游搜索函数返回真实 Community 结果，不称为策展收录。Fufan 只确认精确 npm 元数据路线可读 Alpha.14，未验证其应用 UI。
+- Marketplace 官网搜索、dshx 官方 WebMCP 与 Hub 公开搜索仍未返回目标；旧表单保持队列，Hub Alpha.14 预检仍服务不可用。YELEBAI、brade 快照早于仓库创建，未含目标不等于拒绝收录。
+- DSHPlugin.io 的 3,729 条官方生成目录、dsh.market 的 12,603 条旧目录，以及 dsh-plugin.org 的 4,677 条官方 npm 目录均未含目标；后者更大的网站 topic 索引因网络失败无法确认，不能将 npm 目录缺失扩大为整站未收录。
+
+证据集中在 `.qa/marketplace-audit-20261018/` 的 `github/report.json`、`github/catalog-audit.json`、`automatic/report.json`、`remaining/status.json` 与 `web/`；当前条目链接和准入限制见 [MARKETPLACE.md](MARKETPLACE.md)。本轮没有重新编译本插件、运行真实 DSH、重录演示或重复性能专项。
+
 ## Alpha.13 静态媒体与 dsh.pub 入口检验
 
 首次上传的相同 commit `61b2df2` 在 [main 的 Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101621392) 均完成检查和产物上传；tag 的 Ubuntu 首次运行出现一项长任务测试的帧采样边界失败（预期至少 270 ms、实测 266.7 ms），其余检查通过。后续仅修正该测试的时间测量，保留原生动画时钟、相位和零显式 seek 的断言；未改变运行时代码或移动 tag。相应实际运行结果以 Actions 为准。
