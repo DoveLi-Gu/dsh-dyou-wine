@@ -1,6 +1,6 @@
 # GitHub 与 npm 发布
 
-当前 Alpha 为 `0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将媒体拆为包内独立资源，通过 WebServer 提供，并将真实分发入口加入 Git；双效果、曲线和完整音轨保留。历史 tag 不移动。已按当前账号公开 `DoveLi-Gu/dsh-dyou-wine` 的源码、tag 和 GitHub 发行附件，并设置发现 topics；npm 尚未发布。既有 npm 包 `dsh-showcase` 的公开维护者为 `doveli`，实际发布时仍需核对当前 npm 登录身份。
+当前 Alpha 为 `0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将媒体拆为包内独立资源，通过 WebServer 提供，并将真实分发入口加入 Git；双效果、曲线和完整音轨保留。历史 tag 不移动。已公开 `DoveLi-Gu/dsh-dyou-wine` 的源码、tag、GitHub 发行附件及 npm 确切版本，并设置发现 topics；npm 账号已核对为既有 dsh-showcase 维护者 `doveli`。
 
 ## 上传 GitHub
 
@@ -9,7 +9,7 @@
 3. 配置真实 remote，再提交并推送。CI 会在 Ubuntu／Windows 的 Node 24 执行检查并上传 tarball；未运行的 workflow 不能当作测试结果。
 4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.13` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
 
-市场设置还可使用源码中的 `marketplace/github-topics.json`；它是待执行的 GitHub API 请求体，不会被 GitHub 自动读取。公开后按 [市场准备](MARKETPLACE.md) 核查自动扫描和独立投稿，保留每个平台的实际收录状态。预发布保持 `alpha`，不为市场检索把未经稳定验收的版本设成 latest。`screenshots.json` 与 PNG／GIF 展示图只放入源码，不进入 npm 包。
+市场设置还可使用源码中的 `marketplace/github-topics.json`；它是 GitHub API 请求体，已用于本仓库，GitHub 不会自动读取本文件。按 [市场状态](MARKETPLACE.md) 核查自动扫描和独立投稿，保留每个平台的实际收录状态。预发布使用 `alpha`，不为市场检索主动提升为 latest；首次发包后应读取实际 dist-tags，不能只凭命令参数推断。`screenshots.json` 与 PNG／GIF 展示图只放入源码，不进入 npm 包。
 
 不建议直接分发未构建的源码压缩包。优先将经过检查的 `.tgz` 作为 GitHub Release 附件；如直接安装 GitHub spec，使用固定 tag／提交并按 README 处理 pnpm `allowBuilds`。
 
@@ -29,13 +29,17 @@ Alpha.10 已通过干净副本安装与独立构建、47 项单元测试、36 �
 
 运行验收应检查两个独立效果、固定节奏、既有候选覆盖与交互保护、320 px 简洁面板，以及内置 BGM 的解码、来源链接、无 iframe／平台网络请求、暂停继续、循环、醒酒归零与卸载释放。资源成功加载不能直接标记为已监听物理扬声器。
 
-本版内置由用户指定原投稿 `BV1hXbN6VEKV` 导出的 MP3，录音以独立文件放入包内 `lib/assets`，随 tarball 提供。设置与声明中的来源链接是署名，不能写成已经取得原权利人许可。录音、词曲和合成声库不适用项目代码 MIT；公开发布记录保留 [素材说明](ASSETS.md) 中的来源及独立权利范围。GitHub 已公开，npm 尚未发布。
+本版内置由用户指定原投稿 `BV1hXbN6VEKV` 导出的 MP3，录音以独立文件放入包内 `lib/assets`，随 tarball 提供。设置与声明中的来源链接是署名，不能写成已经取得原权利人许可。录音、词曲和合成声库不适用项目代码 MIT；GitHub 与 npm 的公开发布记录保留 [素材说明](ASSETS.md) 中的来源及独立权利范围。
 
 确认 registry 中该名称和版本的实际归属。此前得到 E404 仅表示当时未查到；不是名称预留，也不能保证账号具有发布权限。
 
 ## 首次 npm 发布
 
-维护者完成 npm 登录／双因素认证后，审查上一步 tarball，再执行同样命令去掉 `--dry-run`。这是公开发布操作，应在确认包名、版本、仓库身份和验收记录后由有权限的维护者执行。预发布必须使用 `--tag alpha`，避免占用 `latest`。同一 `name@version` 无法覆盖重发。
+2026-10-18，维护者完成 npm 登录与安全密钥验证后，使用原已验收的 Alpha.13 tarball 执行 `npm publish ./dsh-dyou-wine-0.1.0-alpha.13.tgz --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org/`。公开 Registry 已确认版本、21 文件及与原包一致的 SRI／SHA1；此后文档更新没有重打包或覆盖该版本。包内文档保留发布前快照，当前状态以仓库为准。
+
+首次发包仍自动出现 `latest`，当前 `alpha` 与 `latest` 均指向 Alpha.13；移除 `latest` 需再次完成 npm 安全密钥验证，维护者暂待处理，不能宣称只剩 alpha。安装时固定 `@0.1.0-alpha.13`。后续预发布继续使用 `--tag alpha`，发布后核查公开 Registry 的实际 dist-tags 和完整性值；CLI 接受请求不代表 Registry 已可读取。同一 `name@version` 无法覆盖重发。
+
+本次标签清理请求最后返回 HTTP 400，未完成删除；待维护者方便时重新发起验证与清理，再读取公开 dist-tags 确认结果。该请求失败不影响已公开的确切版本。
 
 ## 后续 OIDC 发布
 

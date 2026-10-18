@@ -1,13 +1,13 @@
-# 市场投稿草案
+# 市场投稿资料
 
-这里保存市场投稿资料，**不是市场已经收录的记录**。GitHub 仓库、Alpha.13 tag 与发行附件已公开，远程 Topics 已设置；npm 尚未发布，各市场尚未提交。各市场的核对结果与限制见 [收录准备](../docs/MARKETPLACE.md)。
+这里保存市场投稿资料；是否收录以各市场实际记录为准。GitHub 仓库、Alpha.13 tag、发行附件与 npm 确切版本已公开，远程 Topics 已设置；已提交两个 PR 与两个 Issue，其中 dsh.pub PR 已合并、目录已生成并提交，网站部署待确认。各市场链接、核对结果与限制见 [市场状态](../docs/MARKETPLACE.md)。
 
 | 文件 | 发布后用途 |
 | --- | --- |
 | `github-topics.json` | 给真实 GitHub 仓库设置 Topics；这是 GitHub API 的请求体，GitHub 不会自动读取本文件 |
-| `awesome-dsh-plugin/data/plugins/DoveLi-Gu__dsh-dyou-wine.yml` | 向 `awesome-dsh-plugin/awesome-dsh-plugin` 的同路径提交单文件 PR；仓库创建需满一天，并由对方审查 |
-| `ydhrdh/registry/plugins/dsh-dyou-wine/plugin.json` | 向 `ydhrdh/dsh-marketplace` 的同路径提交 PR；保持 `verified:false`，等待维护者核验 |
-| `dsh-pub/submissions/doveli-gu--dsh-dyou-wine.json` | Alpha.13 拆分包内媒体、保留真实编译入口，本地候选已通过其 1 MB 与 bundle 契约检查；最终 Git 提交及公开远程检查后才可投稿，当前仍 pending |
+| `awesome-dsh-plugin/data/plugins/DoveLi-Gu__dsh-dyou-wine.yml` | 待仓库创建满一天：最早北京时间 2026-10-19 13:44:36 才可提交单文件 PR；由对方审查 |
+| `ydhrdh/registry/plugins/dsh-dyou-wine/plugin.json` | 已提交 [PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17)；保持 `verified:false`，远程 fork CI 与审核待维护者批准 |
+| `dsh-pub/submissions/doveli-gu--dsh-dyou-wine.json` | 已提交 [PR #144](https://github.com/dsh-pub/dsh-pub/pull/144)，远程验证通过且已合并；[目录已生成并提交](https://github.com/dsh-pub/dsh-pub/commit/4113d9e47a2fe66a1d027b3c550a0db61a405c1e)，网站部署待确认 |
 | `submission-copy.md` | 各网站表单／Issue 的统一介绍、安装目标及真实验证边界 |
 
 远程 Topics 已按本目录 JSON 设置；后续可用有管理权限且已登录的 GitHub CLI 更新（命令会修改远程仓库）：
@@ -20,6 +20,6 @@ gh api --method PUT repos/DoveLi-Gu/dsh-dyou-wine/topics --input marketplace/git
 
 Alpha.13 将真实 `lib/host.js`、`lib/client.js` 与 `lib/assets/` 中的玩偶／音轨一并纳入 Git 发布源。客户端约 80 KB，媒体通过本机 DSH `webServer` 固定路由加载，媒体原文件仍随包分发；并非空壳入口或远程执行代码。最终 commit 后须再次从 Git blob 核对文件存在和内容，工作树候选通过不能替代远程默认分支检查。
 
-投稿前确认远程 `v0.1.0-alpha.13` 和相应 Release tarball 实际可访问，再使用此处带 tag 的安装目标。Git 来源仍有 `prepare`，构建审批须遵循宿主和市场规则，不能仅因提交了产物就宣传免审一键安装；只有已经公开且通过扫描器核验的精确 npm tarball 才能作为无需源码构建的安装证据。
+远程 `v0.1.0-alpha.13`、Release tarball 与 npm 确切版本均已公开核对；npm 使用原验收 tarball，安装命令见 `submission-copy.md`。Git 来源仍有 `prepare`，构建审批须遵循宿主和市场规则，不能仅因提交了产物就宣传免审一键安装。首次发包自动创建的 `latest` 待 npm 二次验证后移除；投稿时固定 Alpha 版本，不以 dist-tag 代替版本。
 
-官方新版 Discover 使用各运营方提供的 format 1 索引。GitHub 发行源已公开，但尚未指定目标索引，不生成含未发布 npm 版本的“有效索引”。向索引运营方登记时使用真实版本、源 commit、发布时间及 `engines.dsh`。
+官方新版 Discover 使用各运营方提供的 format 1 索引。发行源已公开，但尚未指定目标索引，未擅自为用户安装市场或添加索引。向索引运营方登记时使用真实版本、源 commit、发布时间及 `engines.dsh`。

@@ -72,5 +72,5 @@ for (const path of distribution) {
   assert(bytes.equals(recorded.stdout), `Rebuilt file differs from committed/staged distribution: ${path}`);
 }
 const clientBytes = (await readFile(resolve(root, 'lib/client.js'))).length;
-console.log(`Discovery preparation checked: ${topics.length} topics, ${screenshots.length} real screenshots and 3 submission drafts; nothing submitted.`);
-console.log(`dsh.pub local distribution gate passed: client ${clientBytes} bytes, 4 reproducible distribution files; remote submission and approval remain pending.`);
+console.log(`Discovery metadata checked locally: ${topics.length} topics, ${screenshots.length} real screenshots and 3 submission drafts. External status is recorded in docs/MARKETPLACE.md.`);
+console.log(`dsh.pub local distribution gate passed: client ${clientBytes} bytes, 4 reproducible distribution files. This check does not query remote submission or listing status.`);

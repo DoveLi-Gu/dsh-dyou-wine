@@ -2,7 +2,7 @@
 
 当前发布候选：`0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将 PNG／MP3 拆为包内独立资源，Host 提供同源静态路径，真实编译入口和媒体加入 Git。以下各版本分别记录实际执行范围。
 
-首次 GitHub 公开：源码、Alpha.13 tag 与发行附件已上传，远程发现 topics 已设置；npm 与市场投稿尚未执行。以下“未上传／未运行”描述保留相应历史验收时点；最新 CI 以 [Actions 的提交结果](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 为准。
+当前公开状态：源码、Alpha.13 tag、发行附件与 npm 确切版本已公开，远程发现 topics 已设置；市场投稿状态见 [MARKETPLACE.md](MARKETPLACE.md)。以下旧版本的“未上传／未运行”描述保留相应历史验收时点；最新 CI 以 [Actions 的提交结果](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 为准。
 
 首次上传的相同 commit `61b2df2` 在 [main 的 Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101621392) 均完成检查和产物上传；tag 的 Ubuntu 首次运行出现一项长任务测试的帧采样边界失败（预期至少 270 ms、实测 266.7 ms），其余检查通过。后续仅修正该测试的时间测量，保留原生动画时钟、相位和零显式 seek 的断言；未改变运行时代码或移动 tag。相应实际运行结果以 Actions 为准。
 
@@ -16,7 +16,9 @@
 - 两份媒体的同源 HTTP GET／HEAD 均 200，32 字节 Range 为 206，越界为 416；Content-Type、Length、Content-Range 和完整资源 SHA256 与源文件相同。原生音乐解码 187.370667 秒，readyState 4、volume 0.5、循环，进度、暂停继续和 Escape 归零通过，无 iframe／视频或 B 站媒体请求。物理扬声器输出未监听。
 - 使用固定上游 dsh.pub commit `d93c8bf289c5fb045ccad77ea4610cce0d895b97` 的原投稿与 Topic 检查逻辑，传输替换为本地文件读取；工作树候选通过，边界 1,000,000 bytes 接受、1,000,001 bytes 拒绝。最终提交后从实际 Git blob 重跑的结果保存于 `.qa/release-alpha13/dshpub-git-admission.json`。这验证本地分发闭包，不代表远程市场已收录。
 
-完整资源 HTTP、隔离 Host、录制及最终文件哈希证据集中于 `.qa/release-alpha13/`；本机日常更新与内置浏览器预览独立记录于 `.qa/deployment/static-alpha13/installation.json`，不由隔离测试推断。未重新运行 60 秒性能对照或干净副本构建；旧版本结果单列。GitHub／npm 与收录申请仍未公开执行。
+完整资源 HTTP、隔离 Host、录制及最终文件哈希证据集中于 `.qa/release-alpha13/`；本机日常更新与内置浏览器预览独立记录于 `.qa/deployment/static-alpha13/installation.json`，不由隔离测试推断。未重新运行 60 秒性能对照或干净副本构建；旧版本结果单列。
+
+本轮发布检验：GitHub main [Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101981624) 通过；原验收 tarball 发布到 npm 后，公开 Registry 已确认版本、21 文件及与原包一致的完整性值，证据 `.qa/npm-publish/registry.json`。首次发包生成的 `latest` 待 npm 二次验证后移除。dsh.pub [远程投稿验证](https://github.com/dsh-pub/dsh-pub/actions/runs/39107411742) 通过、PR #144 已合并；ydhrdh 的隔离上游校验及构建通过，远程 fork 工作流待维护者批准。其他目录的审核与展示不能从这些结果推断。
 
 ## Alpha.12 市场发现准备检验
 
