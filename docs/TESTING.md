@@ -1,12 +1,23 @@
 # 测试与验收记录
 
-当前发布候选：`0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将 PNG／MP3 拆为包内独立资源，Host 提供同源静态路径，真实编译入口和媒体加入 Git。以下各版本分别记录实际执行范围。
+本版：`0.1.0-alpha.14`，正式名「D友の酒 · Dyou Wine」。仅更新文档和包版本，以新 npm 版本携带最新趣味 README；业务源码和素材不变，四份构建入口／媒体与 Alpha.13 基线逐字节一致。以下各版本分别记录实际执行范围。
 
-当前公开状态：源码、Alpha.13 tag、发行附件与 npm 确切版本已公开，远程发现 topics 已设置；市场投稿状态见 [MARKETPLACE.md](MARKETPLACE.md)。以下旧版本的“未上传／未运行”描述保留相应历史验收时点；最新 CI 以 [Actions 的提交结果](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 为准。
+公开版本、标签与发行附件以 [npm](https://www.npmjs.com/package/dsh-dyou-wine) 和 [Releases](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases) 实际记录为准；CI 以 [Actions 的提交结果](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 为准。Alpha.13 发行记录与既有市场回执保留；市场状态见 [MARKETPLACE.md](MARKETPLACE.md)。以下旧版本的“未上传／未运行”描述属于相应历史验收时点。
 
-首次上传的相同 commit `61b2df2` 在 [main 的 Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101621392) 均完成检查和产物上传；tag 的 Ubuntu 首次运行出现一项长任务测试的帧采样边界失败（预期至少 270 ms、实测 266.7 ms），其余检查通过。后续仅修正该测试的时间测量，保留原生动画时钟、相位和零显式 seek 的断言；未改变运行时代码或移动 tag。相应实际运行结果以 Actions 为准。
+## Alpha.14 README 同步版
+
+2026-10-18，本版 `npm run check` 完整通过；本地日志 `.qa/alpha14-release/check.log`。本轮实际执行结果如下：
+
+- 类型检查、69 项单元测试（8 文件）、构建、37 项浏览器测试、市场元数据检查与 21 文件包白名单检查通过。包检查使用 dry-run，不代表已生成或上传最终 tarball。
+- 本地市场检查核对版本／锁文件、草稿和分发契约；四份文件已和源 commit `0cdee726b08cb5604f77436abefa256480973a43` 的 Alpha.13 基线逐字节比对一致，报告 `.qa/alpha14-release/runtime-comparison.json`。
+- `lib/host.js` 为 6,174 bytes，`lib/client.js` 为 80,268 bytes；PNG 和 MP3 分别为 1,738,249 与 3,391,068 bytes，四项 SHA256 与基线一致。真实运行时代码和素材未因 README／版本更新变化。
+- 最终 tarball 文件清单、内含 README、哈希和公开 Registry 完整性值应与本版发行附件分别核对；远程发布、tag 和 CI 不由本地检查推断，查看上述实时页面。
+
+本次未重跑真实 DSH、60 秒性能对照或物理扬声器验收，也未更新用户日常 DSH。运行入口和媒体逐字节相同，真实宿主功能证据沿用下方单列的 Alpha.13 历史，不能称为本版新实测。原包、tag 与七项市场回执保留，市场条目未因此自动完成新版审核。
 
 ## Alpha.13 静态媒体与 dsh.pub 入口检验
+
+首次上传的相同 commit `61b2df2` 在 [main 的 Windows／Ubuntu CI](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions/runs/39101621392) 均完成检查和产物上传；tag 的 Ubuntu 首次运行出现一项长任务测试的帧采样边界失败（预期至少 270 ms、实测 266.7 ms），其余检查通过。后续仅修正该测试的时间测量，保留原生动画时钟、相位和零显式 seek 的断言；未改变运行时代码或移动 tag。相应实际运行结果以 Actions 为准。
 
 2026-10-18，`npm run check` 通过：类型检查、69 项测试（含新增 22 项真实 HTTP／Cordis 生命周期测试）、构建、37 项浏览器测试、市场资料检查及 21 文件包检查。日志 `.qa/release-alpha13/check.log`。新增浏览器用例验证媒体 HTTP 加载失败时显示错误，界面与玩偶仍按原固定时钟运行。
 

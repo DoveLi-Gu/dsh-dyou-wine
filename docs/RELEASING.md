@@ -1,13 +1,13 @@
 # GitHub 与 npm 发布
 
-当前 Alpha 为 `0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将媒体拆为包内独立资源，通过 WebServer 提供，并将真实分发入口加入 Git；双效果、曲线和完整音轨保留。历史 tag 不移动。已公开 `DoveLi-Gu/dsh-dyou-wine` 的源码、tag、GitHub 发行附件及 npm 确切版本，并设置发现 topics；npm 账号已核对为既有 dsh-showcase 维护者 `doveli`。
+本版为 `0.1.0-alpha.14`，正式名「D友の酒 · Dyou Wine」，用于将最新趣味 README 随新 npm 版本分发。仅更新文档和包版本，业务源码及素材不变；四份运行入口／媒体与 Alpha.13 基线逐字节一致，完整本地检查通过。公开版本、标签、完整性值、发行附件及 CI 分别以 [npm](https://www.npmjs.com/package/dsh-dyou-wine)、[Releases](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases) 和 [Actions](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 的实际记录为准。Alpha.13 的包、tag 和发行附件不覆盖、不移动。仓库为 `DoveLi-Gu/dsh-dyou-wine`；npm 账号已核对为既有 dsh-showcase 维护者 `doveli`。
 
 ## 上传 GitHub
 
 1. 审阅源码、MIT 许可与 `.gitignore`，确认不提交 `node_modules`、`.qa`、DSH profile、临时下载、测试报告、日志、`.env` 或凭据。Alpha.13 起明确提交四份构建分发文件：`lib/host.js`、`lib/client.js` 及 `lib/assets` 的原 PNG／MP3；每次构建与 Git 中产物比对，保证入口可被源码市场读取。其余临时构建文件仍忽略。指定 MP3 应与 [素材说明](ASSETS.md) 一并审阅；音乐权利不由代码 MIT 许可覆盖。源仓库提交 `package-lock.json`，CI 通过 `npm ci` 重现依赖。
 2. `package.json` 已按经核对账号填写计划仓库的 `repository`、`homepage`、`bugs`；创建远程仓库时使用相同归属与名称。推荐公开源码，以便建立包的 provenance。若改用其他仓库，先同步这三个字段及工作流身份断言。
 3. 配置真实 remote，再提交并推送。CI 会在 Ubuntu／Windows 的 Node 24 执行检查并上传 tarball；未运行的 workflow 不能当作测试结果。
-4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.13` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
+4. 保留仓库的 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` 等 topics。确认本版测试记录及兼容矩阵后，提交并创建新的 `v0.1.0-alpha.14` tag，指向已审查提交；不要移动 Alpha.13 tag。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
 
 市场设置还可使用源码中的 `marketplace/github-topics.json`；它是 GitHub API 请求体，已用于本仓库，GitHub 不会自动读取本文件。按 [市场状态](MARKETPLACE.md) 核查自动扫描和独立投稿，保留每个平台的实际收录状态。预发布使用 `alpha`，不为市场检索主动提升为 latest；首次发包后应读取实际 dist-tags，不能只凭命令参数推断。`screenshots.json` 与 PNG／GIF 展示图只放入源码，不进入 npm 包。
 
@@ -20,7 +20,7 @@ npm ci
 npx playwright install chromium
 npm run check
 npm pack --ignore-scripts
-npm publish ./dsh-dyou-wine-0.1.0-alpha.13.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
+npm publish ./dsh-dyou-wine-0.1.0-alpha.14.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
 ```
 
 `pack:check` 使用 `npm pack --dry-run --ignore-scripts --json` 检查包内容白名单、入口、bundle 补丁和客户端声明。它不上传文件。`files` 仅包含编译产物、patch、许可证、README／变更记录与必要运行说明；测试夹具、原策划案和开发配置不进入 npm 包。
@@ -33,11 +33,15 @@ Alpha.10 已通过干净副本安装与独立构建、47 项单元测试、36 �
 
 确认 registry 中该名称和版本的实际归属。此前得到 E404 仅表示当时未查到；不是名称预留，也不能保证账号具有发布权限。
 
-## 首次 npm 发布
+## Alpha.14 检查与发布核对
+
+本版已执行四份运行入口／媒体字节比对与完整本地检查，具体结果见 [TESTING.md](TESTING.md)。本次未重跑真实 DSH、60 秒性能对照或物理扬声器验收，真实宿主功能证据沿用 Alpha.13 历史，不写成本版新实测。最终 tarball 的文件与 README、哈希、公开 Registry 完整性值和相应 CI 应分别核对；包内说明不预先宣称远程操作成功。发包使用 `--tag alpha`，随后读取实际 dist-tags；新 README 通过新版本提供，不能覆盖重发 Alpha.13。现有七项市场回执不代表本版重新投稿／通过。
+
+## Alpha.13 首次 npm 发布记录
 
 2026-10-18，维护者完成 npm 登录与安全密钥验证后，使用原已验收的 Alpha.13 tarball 执行 `npm publish ./dsh-dyou-wine-0.1.0-alpha.13.tgz --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org/`。公开 Registry 已确认版本、21 文件及与原包一致的 SRI／SHA1；此后文档更新没有重打包或覆盖该版本。包内文档保留发布前快照，当前状态以仓库为准。
 
-首次发包仍自动出现 `latest`，当前 `alpha` 与 `latest` 均指向 Alpha.13。维护者本次安全密钥验证已成功，但随后删除 `latest` 的请求被 Registry 以 HTTP 400 拒绝；此前归因为“验证尚未完成，完成后即可移除”不准确。当前保留双标签，版本仍为 Alpha，安装时固定 `@0.1.0-alpha.13`。
+Alpha.13 首次发包后，`alpha` 与 `latest` 均指向 Alpha.13。维护者当次安全密钥验证已成功，但随后删除 `latest` 的请求被 Registry 以 HTTP 400 拒绝；此前归因为“验证尚未完成，完成后即可移除”不准确。该记录只描述 Alpha.13 当次发布，不作为后续版本和标签的当前状态。
 
 [npm CLI issue #8490](https://github.com/npm/cli/issues/8490) 记录了首发自定义标签仍出现 `latest`、删除返回 400 的同类现象；[pnpm 固定版本源码](https://github.com/pnpm/pnpm/blob/9a09d43423d35092057e8ce0fda0c6b0ea0ecbcc/pnpm11/registry-access/commands/src/distTag.ts) 也显式拒绝删除 `latest`。这些资料与本次实测不等于已确认 npm 所有场景下的永久规则，不承诺仅凭再次验证就可删除。后续预发布继续使用 `--tag alpha`，发布后读取公开 Registry 的实际 dist-tags 和完整性值，不保证只存在 alpha；CLI 接受请求不代表 Registry 已可读取。同一 `name@version` 无法覆盖重发。
 

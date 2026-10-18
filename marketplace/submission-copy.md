@@ -2,8 +2,10 @@
 
 状态：发行源已公开，部分市场已投稿；各入口实际状态见 `docs/MARKETPLACE.md`。不要把“已投稿”写成“已收录”或“已获授权”。
 
+七项既有回执及其中已核对的安装目标属于 Alpha.13。Alpha.14 为文档同步版，完整本地检查和运行入口／媒体字节比对已通过；此处保留原投稿记录，不宣称新版重新投稿。后续使用本版安装目标时，先核对 [npm 确切版本](https://www.npmjs.com/package/dsh-dyou-wine/v/0.1.0-alpha.14) 或相应 [Release](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases) 的实际公开记录。
+
 - 仓库：`https://github.com/DoveLi-Gu/dsh-dyou-wine`
-- npm 包：`dsh-dyou-wine`；已公开 `0.1.0-alpha.13`，请固定版本安装。维护者本次验证成功后，Registry 仍以 HTTP 400 拒绝删除 `latest`；当前 `alpha`／`latest` 均指向本版，版本仍为 Alpha。
+- npm 包：`dsh-dyou-wine`；既有回执使用已公开 `0.1.0-alpha.13`。该版首发时 `alpha`／`latest` 均指向 Alpha.13，验证成功后删除 `latest` 仍被 Registry 以 HTTP 400 拒绝；后续版本与标签需核对 Registry，安装固定确切版本，不能把标签视为稳定性验收。
 - 类别：界面增强／娱乐／桌宠；仅 DSH Web。
 - 中文简介：让 DSH 界面与蓝白鲸鱼娘毛绒玩偶按固定节奏 Q 弹；界面和玩偶可独立开关，玩偶满屏飞行、碰墙反弹。
 - English: Fixed-rhythm squash-and-stretch motion for the DSH web interface, plus a flying whale-girl plush that reflects off the viewport edges. Both effects have independent switches.

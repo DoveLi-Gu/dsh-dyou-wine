@@ -1,6 +1,8 @@
 # 插件市场发现与投稿状态
 
-核查日期：2026-10-18。已发布版本：`0.1.0-alpha.13`；仓库：`DoveLi-Gu/dsh-dyou-wine`；npm：`dsh-dyou-wine`。
+核查日期：2026-10-18。本地检验版本：`0.1.0-alpha.14`；既有投稿回执版本：`0.1.0-alpha.13`；仓库：`DoveLi-Gu/dsh-dyou-wine`；npm：`dsh-dyou-wine`。
+
+Alpha.14 为文档同步版，以新 npm 包携带最新 README；完整本地检查和四份运行入口／媒体字节比对已通过。公开版本、标签和附件以 [npm](https://www.npmjs.com/package/dsh-dyou-wine) 与 [Releases](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases) 实际记录为准。以下七项既有回执与线上目录快照属于 Alpha.13 公开来源，不代表 Alpha.14 已重新投稿或审核；本地后续草稿更新不改写已提交 PR／Issue。
 
 GitHub 仓库、`v0.1.0-alpha.13` tag、发行附件与 [npm 确切版本](https://www.npmjs.com/package/dsh-dyou-wine/v/0.1.0-alpha.13) 已公开，远程已设置 `marketplace/github-topics.json` 中的 9 个 topics。累计完成两个 PR、三个 Issue 和两个网页表单投稿；[dsh.pub 已在线收录](https://dsh.pub/zh/plugins/dsh-dyou-wine/)，其余投稿待审核、检测或运营处理。各入口的限制和实际状态列于下表。投稿、合并、网站展示与运行兼容分别核对，不把一个结果替代其他结果。本表覆盖本次找到并核对的入口，不声称穷尽全网。
 
@@ -27,7 +29,7 @@ GitHub 仓库、`v0.1.0-alpha.13` tag、发行附件与 [npm 确切版本](https
 | ydhrdh／`dsh-marketplace` | 独立 PR，新增 `registry/plugins/<id>/plugin.json`，由维护者授予 verified 状态。 | 已提交 [PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17)，固定 Git tag、`verified: false`；本地上游验证及构建通过，远程 fork CI 为 `action_required`，待维护者批准工作流与审核。[贡献指南](https://github.com/ydhrdh/dsh-marketplace/blob/main/CONTRIBUTING.md) |
 | `dsh.pub` | 独立 GitHub PR 提交公开仓库，静态验证 bundle 与已提交入口；topic 发现同样需通过其检查。 | [PR #144](https://github.com/dsh-pub/dsh-pub/pull/144) 已合并；远程验证通过，[目录已提交](https://github.com/dsh-pub/dsh-pub/commit/4113d9e47a2fe66a1d027b3c550a0db61a405c1e)。官方搜索 API 已确认收录并返回[详情入口](https://dsh.pub/zh/plugins/dsh-dyou-wine/)，条目为 `community-submitted`、`installable: true`。Alpha.13 完整 client 入口为 80,268 bytes。[验证运行](https://github.com/dsh-pub/dsh-pub/actions/runs/39107411742)、[校验源码](https://github.com/dsh-pub/dsh-pub/blob/d93c8bf289c5fb045ccad77ea4610cce0d895b97/scripts/lib/plugin-submission.mjs) |
 | `dshplugin.online` | 自站说明为 GitHub 仓库加 `dsh-plugin` topic 后进入目录。 | 公开后设置 topic，等待并核查搜索；不保证该站的扫描时效。[第一方说明](https://dshplugin.online/) |
-| Fufan Studio Plugin Center | npm `keywords:dsh-plugin` 搜索，读取确切 npm 版本的 bundle；精确包名查询默认取 latest。 | npm 确切版本已公开，目录同步尚未确认；Registry 当前保留 `alpha`／`latest` 双标签，版本仍为 Alpha，请固定版本安装。[目录源码](https://github.com/fufankeji/deepseek-harness-studio/blob/main/apps/desktop/src/plugin-center/npm-ecosystem-catalog.ts) |
+| Fufan Studio Plugin Center | npm `keywords:dsh-plugin` 搜索，读取确切 npm 版本的 bundle；精确包名查询默认取 latest。 | Alpha.13 确切版本已公开，目录同步尚未确认；后续版本与标签需核对 Registry，Alpha 标签不等于稳定性验收，请固定版本安装。[目录源码](https://github.com/fufankeji/deepseek-harness-studio/blob/main/apps/desktop/src/plugin-center/npm-ecosystem-catalog.ts) |
 | `dsh.deepseek404.com` | 自站页脚声明从 GitHub 公开项目自动聚合、未经人工审核，并链接 GitHub topic。 | 公开后等待扫描；没有把自动聚合表述为审核通过。[第一方入口](https://dsh.deepseek404.com/) |
 | bradeGithub／`DSH-Plugins-Marketplace` | `dsh-plugin` topic 扫描，再按 `dsh` 对象或宿主依赖等能力信号识别插件。 | 当前 `dsh.bundle` 与真实入口已满足识别形态，无需另加 `dsh.plugin`／`dsh.kind`。[作者标准](https://github.com/bradeGithub/DSH-Plugins-Marketplace/blob/main/STANDARD.md)、[实际识别器](https://github.com/bradeGithub/DSH-Plugins-Marketplace/blob/main/lib/domain/validation.js) |
 | `dsh.market`／`2BingLing/dsh-market` | 扫描 `dsh-plugin`、`dsh` 等 topics，随后检测 `cordis.patch.yml` 等真实插件标记；另支持 Issue 投稿。 | 已补投 [Issue #255](https://github.com/2BingLing/dsh-market/issues/255)，状态 OPEN、标签 `submission`，待自动候选检测；无需新增包字段。[第一方规则](https://github.com/2BingLing/dsh-market#收录机制) |
@@ -73,7 +75,7 @@ gh repo edit DoveLi-Gu/dsh-dyou-wine --add-topic dsh-plugin --add-topic deepseek
 
 `screenshots.json` 放在本仓库 `package.json` 旁，列出 1–8 个真实图片相对路径。本项目按运行 PNG、控制面板 PNG、演示 GIF 排序。路径不能以 `/` 开头或包含 `..`；绝对 URL 须为 HTTPS GitHub 图床。当前 Awesome 探测器没有图片后缀／字节限制，但 GIF 较大，用 PNG 作首图更利于加载；这不代表所有下游都使用相同限制。[截图 schema 与存活探测](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/blob/main/scripts/probe-screenshots.mjs)
 
-npm 包的 `repository` 必须指回真实公开仓库，Awesome 才能自动关联；不要在其 YAML 条目手写 `npm:`，该字段会被拒绝。本次实际使用 `--tag alpha` 发布；首次发包后 Registry 同时出现 `alpha` 和 `latest`。维护者本次安全密钥验证已成功，但 Registry 以 HTTP 400 拒绝删除 `latest`，当前保留双标签，版本仍为 Alpha；实测与参考见 [发布记录](RELEASING.md)。保留精确 `@0.1.0-alpha.13` 或固定 Release tag 的安装来源。Awesome 的 npm 版本展示取 `dist-tags.latest`；官方新版 Discover 则按其索引内兼容版本选默认项，不以 npm latest 作为统一规则。[npm 映射源码](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/blob/main/scripts/probe-npm.mjs)
+npm 包的 `repository` 必须指回真实公开仓库，Awesome 才能自动关联；不要在其 YAML 条目手写 `npm:`，该字段会被拒绝。Alpha.13 首次使用 `--tag alpha` 发布后，Registry 同时出现 `alpha` 和 `latest`；维护者当次验证已成功，但删除 `latest` 仍被 HTTP 400 拒绝，实测与参考见 [发布记录](RELEASING.md)。后续标签读取实际 Registry，安装固定确切版本；旧回执的 `@0.1.0-alpha.13` 或 Release tag 不因此改写。Awesome 的 npm 版本展示取 `dist-tags.latest`；官方新版 Discover 则按其索引内兼容版本选默认项，不以 npm latest 作为统一规则。[npm 映射源码](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/blob/main/scripts/probe-npm.mjs)
 
 ## 后续处理
 

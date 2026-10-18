@@ -6,7 +6,7 @@
 
 默认清醒。点「开喝」开始整活，按 `Escape` 随时醒酒。
 
-`0.1.0-alpha.13` · [npm](https://www.npmjs.com/package/dsh-dyou-wine/v/0.1.0-alpha.13) · [测试记录](docs/TESTING.md) · [兼容矩阵](docs/COMPATIBILITY.md)
+`0.1.0-alpha.14` · [npm](https://www.npmjs.com/package/dsh-dyou-wine/v/0.1.0-alpha.14) · [测试记录](docs/TESTING.md) · [兼容矩阵](docs/COMPATIBILITY.md)
 
 > **给作者续一杯 · [鸽子中转站](https://api.doveli.top/)**<br>
 > OpenAI 兼容 API，给常用 AI 编程工具接个入口。[查看接入文档](https://www.doveli.top/docs/)
@@ -31,12 +31,12 @@
 把大肥鱼娘请进你的 Web profile：
 
 ```sh
-dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13 --ignore-scripts
+dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.14 --ignore-scripts
 ```
 
 **重启 DSH Host，再刷新页面。** 这是确切版本安装命令，请保留版本号。已有其他 Web profile 的话，把 `web` 换成你使用的 profile。
 
-也可以从 [Alpha.13 Release](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases/tag/v0.1.0-alpha.13) 下载已编译的 `.tgz` 安装；源码构建和隔离试用步骤在下方折叠区。
+也可以从 [Alpha.14 Release](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases/tag/v0.1.0-alpha.14) 下载已编译的 `.tgz` 安装；源码构建和隔离试用步骤在下方折叠区。
 
 ## 操作：三步开喝
 
@@ -96,10 +96,10 @@ dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13 --ignore-scripts
 <details>
 <summary><strong>发行包、源码构建、隔离试用与卸载</strong></summary>
 
-从 [Alpha.13 Release](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases/tag/v0.1.0-alpha.13) 下载 `dsh-dyou-wine-0.1.0-alpha.13.tgz`：
+从 [Alpha.14 Release](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases/tag/v0.1.0-alpha.14) 下载 `dsh-dyou-wine-0.1.0-alpha.14.tgz`：
 
 ```sh
-dsh plugin --profile web add ./dsh-dyou-wine-0.1.0-alpha.13.tgz --ignore-scripts
+dsh plugin --profile web add ./dsh-dyou-wine-0.1.0-alpha.14.tgz --ignore-scripts
 ```
 
 安装后重启 Host 并刷新页面。已有 Web profile 可用 `dsh plugin --profile 你的profile add 安装包绝对路径` 更新，这会影响该 profile 的全部会话。
@@ -113,13 +113,13 @@ npm run check
 npm pack --ignore-scripts
 ```
 
-生成 `dsh-dyou-wine-0.1.0-alpha.13.tgz`。推荐在独立 DSH home 和 Web profile 先试用；下面是 PowerShell 示例：
+生成 `dsh-dyou-wine-0.1.0-alpha.14.tgz`。推荐在独立 DSH home 和 Web profile 先试用；下面是 PowerShell 示例：
 
 ```powershell
 $env:DSH_HOME = Join-Path $PWD '.qa/dsh-home'
 dsh --version
 dsh --profile dyou-wine-test --from-default-profile web --dump-config
-$wineTarball = Join-Path $PWD 'dsh-dyou-wine-0.1.0-alpha.13.tgz'
+$wineTarball = Join-Path $PWD 'dsh-dyou-wine-0.1.0-alpha.14.tgz'
 dsh plugin --profile dyou-wine-test add $wineTarball --ignore-scripts
 dsh --profile dyou-wine-test --dump-config
 dsh --profile dyou-wine-test --no-open --host 127.0.0.1 --port 0
@@ -147,9 +147,9 @@ allowBuilds:
 <details>
 <summary><strong>发布状态、市场收录与开发验收</strong></summary>
 
-公开 Registry 已确认 `dsh-dyou-wine@0.1.0-alpha.13`，`alpha`／`latest` 均指向本版；维护者验证成功后，Registry 仍以 HTTP 400 拒绝删除 `latest`，暂保留双标签。版本仍为 Alpha，请固定版本安装。
+Alpha.14 是 README 同步版，编译入口、玩偶图片和音频与 Alpha.13 逐字节一致。后续预发布继续使用 `alpha`；当前仍为 Alpha，请按上方确切版本安装。Alpha.13 首次公开时，Registry 在维护者验证成功后仍以 HTTP 400 拒绝删除 `latest`；该历史记录不代表当前标签状态。
 
-npm 使用原已验收的 GitHub Release tarball，公开完整性值与原包一致，未因发布或文案更新重打包。包内文档保留发布前快照；当前状态以仓库和 [更新公告](CHANGELOG.md) 为准。GitHub main README 更新不会同步改写已发布 npm 包内的 README。
+npm 的 README 随版本保存，GitHub main 的文案更新不会改写旧包。这次通过新的 Alpha.14 包同步说明，原 Alpha.13 版本、tag 和发行附件保留。最新发布记录见 [更新公告](CHANGELOG.md)。
 
 市场发现保留 `dsh-plugin` npm 关键词、`dsh.bundle`、已验证的 `engines.dsh`、中英文名称说明和图标；根 `screenshots.json` 指向真实画面。远程已设置 `dsh-plugin` Topic 与另外 8 个相关主题。
 
@@ -170,9 +170,9 @@ npm run pack:check
 
 `npm run check` 依次运行类型检查、单元测试、构建、浏览器测试、市场资料与包白名单检查。修改运行时代码后先构建，将 `lib/host.js`、`lib/client.js` 与两份 `lib/assets` 资源加入同一待提交变更；市场自检比较 Git 暂存区与构建内容，CI 验证已提交产物。Linux 首次可运行 `npx playwright install --with-deps chromium`。
 
-模拟页：`http://127.0.0.1:4179/tests/fixture/`，并非实际 DSH。真实隔离宿主检查：`node scripts/dsh-smoke.mjs --tarball ./dsh-dyou-wine-0.1.0-alpha.13.tgz`，CLI 自动发现本地或全局安装，特殊布局可加 `--dsh-bin /absolute/path/to/dsh/lib/bin.js`；60 秒对照单独运行 `npm run benchmark`。[测试记录](docs/TESTING.md) 分别记载模拟页、真实宿主及其他验收边界。
+模拟页：`http://127.0.0.1:4179/tests/fixture/`，并非实际 DSH。真实隔离宿主检查：`node scripts/dsh-smoke.mjs --tarball ./dsh-dyou-wine-0.1.0-alpha.14.tgz`，CLI 自动发现本地或全局安装，特殊布局可加 `--dsh-bin /absolute/path/to/dsh/lib/bin.js`；60 秒对照单独运行 `npm run benchmark`。[测试记录](docs/TESTING.md) 分别记载模拟页、真实宿主及其他验收边界。
 
-复现演示需要 DSH、Playwright Chromium 和 PATH 中的 FFmpeg：构建、打包后运行 `npm run demo:record -- ./dsh-dyou-wine-0.1.0-alpha.13.tgz`。脚本创建新的隔离 DSH home 和测试会话，录制原速双效果及两个方向的反弹，导出 `docs/assets/demo.gif`；原录屏和采样报告留在忽略提交的 `.qa/demo/`。
+复现演示需要 DSH、Playwright Chromium 和 PATH 中的 FFmpeg：构建、打包后运行 `npm run demo:record -- ./dsh-dyou-wine-0.1.0-alpha.14.tgz`。脚本创建新的隔离 DSH home 和测试会话，录制原速双效果及两个方向的反弹，导出 `docs/assets/demo.gif`；原录屏和采样报告留在忽略提交的 `.qa/demo/`。
 
 客户端由宿主 ModuleLoader 加载，使用宿主 React，以独立 id 注册 `shell.overlay`。DOM 版本适配不依赖构建后 CSS 哈希。[GitHub Actions](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 在 Ubuntu／Windows Node 24 运行检查；npm 工作流仅手动触发，上传代码或 tag 不会自动发布 npm。
 

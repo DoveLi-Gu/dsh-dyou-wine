@@ -41,4 +41,6 @@ BGM 播放不得产生平台媒体请求或 iframe；验证正确音轨、来源
 
 ## 分发与阶段
 
-正式名「D友の酒 · Dyou Wine」，版本 `0.1.0-alpha.13`，包名 `dsh-dyou-wine`，GitHub 仓库为 `DoveLi-Gu/dsh-dyou-wine`。源码、tag、发行附件与 npm 确切版本已公开，发现 topics 已设置；`alpha` 与 `latest` 当前同时指向本版，维护者验证成功后 Registry 仍以 HTTP 400 拒绝删除 `latest`，暂保留双标签，版本仍为 Alpha，使用时请固定版本。仓库元数据、图标、中英文发现名称、CI 与发布公告均随源码提供。编译后的真实入口和静态媒体进入 Git 与安装包，单个程序入口保持在 dsh.pub 的 1,000,000 bytes 限制内；总包体积不受这个入口阈值约束。最终检验与日常安装记录单列于 `docs/TESTING.md`，市场投稿实际状态见 [MARKETPLACE.md](docs/MARKETPLACE.md)。音频与角色图的来源和权利范围见 [素材说明](docs/ASSETS.md)。
+正式名「D友の酒 · Dyou Wine」，版本 `0.1.0-alpha.14`，包名 `dsh-dyou-wine`，GitHub 仓库为 `DoveLi-Gu/dsh-dyou-wine`。本版仅更新文档与包版本，以新 npm 版本携带最新趣味 README；业务源码与素材不变，四份构建入口／媒体已和 Alpha.13 基线逐字节比对一致，完整本地检查通过。未更新用户日常 DSH；本次未重跑真实 DSH 或性能专项，旧版证据单列于测试记录。公开版本与发行附件以 [npm](https://www.npmjs.com/package/dsh-dyou-wine) 和 [Releases](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases) 实际记录为准。
+
+已公开 Alpha.13 的源码、tag、发行附件与 npm 包保留，发现 topics 已设置；准备 Alpha.14 时 `alpha` 与 `latest` 均指向 Alpha.13，验证成功后删除 `latest` 仍被 Registry 以 HTTP 400 拒绝。后续发包继续使用 `--tag alpha` 并核对实际标签，使用时固定确切版本。真实编译入口和静态媒体进入 Git 与安装包，单个程序入口的 dsh.pub 限制为 1,000,000 bytes，不是总包体积阈值；本版重新检查结果与日常安装记录分别记于 [TESTING.md](docs/TESTING.md)。既有市场回执与本版发布分别记录，见 [MARKETPLACE.md](docs/MARKETPLACE.md)。音频与角色图的来源和权利范围见 [素材说明](docs/ASSETS.md)。

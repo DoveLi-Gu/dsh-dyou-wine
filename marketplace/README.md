@@ -2,6 +2,8 @@
 
 这里保存市场投稿资料；是否收录以各市场实际记录为准。GitHub 仓库、Alpha.13 tag、发行附件与 npm 确切版本已公开，远程 Topics 已设置；累计完成两个 PR、三个 Issue 和两个网页表单投稿，其中 [dsh.pub 已在线收录](https://dsh.pub/zh/plugins/dsh-dyou-wine/)，其余待审核、检测或运营处理。各市场链接、核对结果与限制见 [市场状态](../docs/MARKETPLACE.md)。
 
+Alpha.14 仅同步文档和包版本，完整本地检查和运行入口／媒体字节比对已通过。对应本地草稿用于后续版本更新，不代表修改了七项既有远程回执；实际公开版本、标签及发行附件需按 [npm](https://www.npmjs.com/package/dsh-dyou-wine) 和 [Releases](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases) 核对。
+
 | 文件 | 发布后用途 |
 | --- | --- |
 | `github-topics.json` | 给真实 GitHub 仓库设置 Topics；这是 GitHub API 的请求体，GitHub 不会自动读取本文件 |
@@ -20,6 +22,6 @@ gh api --method PUT repos/DoveLi-Gu/dsh-dyou-wine/topics --input marketplace/git
 
 Alpha.13 将真实 `lib/host.js`、`lib/client.js` 与 `lib/assets/` 中的玩偶／音轨一并纳入 Git 发布源。客户端约 80 KB，媒体通过本机 DSH `webServer` 固定路由加载，媒体原文件仍随包分发；并非空壳入口或远程执行代码。最终 commit 后须再次从 Git blob 核对文件存在和内容，工作树候选通过不能替代远程默认分支检查。
 
-远程 `v0.1.0-alpha.13`、Release tarball 与 npm 确切版本均已公开核对；npm 使用原验收 tarball，安装命令见 `submission-copy.md`。Git 来源仍有 `prepare`，构建审批须遵循宿主和市场规则，不能仅因提交了产物就宣传免审一键安装。维护者本次验证成功后，Registry 仍以 HTTP 400 拒绝删除 `latest`；当前保留 `alpha`／`latest` 双标签，投稿时固定 Alpha 版本，不以 dist-tag 代替版本。
+既有回执中的远程 `v0.1.0-alpha.13`、Release tarball 与 npm 确切版本均已公开核对；该版 npm 使用原验收 tarball。Git 来源仍有 `prepare`，构建审批须遵循宿主和市场规则，不能仅因提交了产物就宣传免审一键安装。Alpha.13 首发后出现 `alpha`／`latest` 双标签，验证成功后删除 `latest` 仍被 Registry 以 HTTP 400 拒绝；后续标签需读取实际 Registry，投稿时固定 Alpha 版本，不以 dist-tag 代替版本。
 
 官方新版 Discover 使用各运营方提供的 format 1 索引。发行源已公开，但尚未指定目标索引，未擅自为用户安装市场或添加索引。向索引运营方登记时使用真实版本、源 commit、发布时间及 `engines.dsh`。
