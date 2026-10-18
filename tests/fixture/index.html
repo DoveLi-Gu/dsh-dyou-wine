@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D友の酒 · synthetic compatibility fixture</title>
+    <style>
+      :root { color-scheme: light; font: 15px/1.65 system-ui, sans-serif; color: #232731; background: #f5f6f8; }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      button, textarea, input, select { font: inherit; }
+      button { border: 1px solid #d7dce5; border-radius: 8px; background: white; color: inherit; padding: 8px 12px; cursor: pointer; }
+      .fixture-shell { display: grid; grid-template-columns: 235px minmax(0, 1fr); height: 100vh; }
+      aside { padding: 30px 18px; border-right: 1px solid #dde1e8; background: #eceff3; }
+      aside h2 { margin: 0 0 16px; font-size: 20px; }
+      aside button { display: block; width: 100%; margin-bottom: 11px; text-align: left; }
+      .fixture-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+      header { height: 75px; padding: 20px 40px; background: white; border-bottom: 1px solid #e0e4eb; }
+      header strong { font-size: 20px; }
+      header small { color: #697282; margin-left: 15px; }
+      #history { flex: 1; min-height: 0; overflow: auto; padding: 24px 45px; }
+      [data-chat-flow] { max-width: 850px; margin: 0 auto; }
+      article { margin-bottom: 24px; padding: 14px 21px; border: 1px solid #e1e5ec; border-radius: 12px; background: white; }
+      article[data-chat-flow-kind=user] { background: #edf3ff; margin-left: 80px; }
+      article p { margin: 8px 0; }
+      .role { font-size: 12px; color: #6a7484; margin-bottom: 8px; }
+      [data-tool] { padding: 12px 16px; background: #f1f4f7; border: 1px solid #d9e0e9; border-radius: 8px; }
+      pre { overflow: auto; background: #e7ecf3; padding: 12px; border-radius: 6px; font-size: 13px; }
+      [data-composer-card] { margin: 0 38px 25px; padding: 14px 16px; border: 1px solid #cdd6e5; border-radius: 12px; background: white; }
+      textarea { width: 100%; min-height: 56px; border: none; outline-offset: 3px; resize: vertical; background: transparent; }
+      .composer-actions { display: flex; justify-content: space-between; align-items: center; }
+      .composer-actions span { color: #788294; font-size: 12px; }
+      #approval { position: fixed; inset: 210px auto auto 450px; width: 420px; z-index: 100; padding: 24px; background: white; border: 2px solid #8c97a8; border-radius: 12px; box-shadow: 0 10px 60px #23304630; }
+      #approval[hidden] { display: none; }
+      .fixture-note { font-size: 12px; color: #697282; }
+      @media (prefers-color-scheme: dark) {
+        :root { color-scheme: dark; color: #e2e7f1; background: #171b22; }
+        aside { background: #1d232e; border-color: #353e4c; }
+        header, article, [data-composer-card], button, #approval { background: #222a36; border-color: #3d495b; color: inherit; }
+        article[data-chat-flow-kind=user], [data-tool], pre { background: #28384d; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fixture-shell">
+      <aside data-slot="sidebar" aria-label="会话侧栏">
+        <h2>DeepSeek Harness</h2>
+        <button id="sidebar-session" role="listitem">D友の酒兼容性验收</button>
+        <button role="listitem">代码与工具卡测试</button>
+        <button role="listitem">长对话性能测试</button>
+        <p class="fixture-note">此页面是合成测试场景。真实 DSH 的安装与截图另行记录。</p>
+      </aside>
+      <main class="fixture-main">
+        <header><strong>D友の酒测试场景</strong><small>五类区域 · 原生 DOM · 无模型调用</small></header>
+        <div id="history">
+          <section data-chat-flow aria-label="对话内容">
+            <article id="user-message" data-chat-flow-key="user-1" data-chat-flow-kind="user">
+              <div class="role">用户</div>
+              <p id="user-text">让消息、正文、工具卡、输入框与侧栏一起 Q 弹。</p>
+            </article>
+            <article id="assistant-message" data-chat-flow-key="assistant-1" data-chat-flow-kind="assistant">
+              <div class="role">助手</div>
+              <h2>已准备五类界面</h2>
+              <p id="assistant-text">这是用于选择、复制和流式更新的测试段落。中文 English 123，不得被拆分、替换或复制成多份。</p>
+              <p id="stream-text" data-streaming>正在生成：第一段内容。</p>
+              <div id="tool-card" data-tool="read_file" data-chat-call-id="call-fixture-1">
+                <strong>read_file · 测试工具卡</strong>
+                <p>合成工具结果保留原有折叠、代码与复制行为。</p>
+                <details open><summary>代码输出</summary><div id="code-card" data-code-wrap="true"><div data-code-block-banner>TypeScript</div><div id="code-scroll" data-code-block-content style="overflow:auto"><div><pre id="code-block"><code>const greeting = "你好，DSH";
+console.log(greeting);</code></pre></div></div></div></details>
+              </div>
+              <p id="host-transform" style="transform: translateX(7px); color: rgb(42, 71, 104)">宿主 transform 共存检查</p>
+              <button id="host-action">复制测试内容</button>
+            </article>
+          </section>
+        </div>
+        <form data-composer-card id="composer-card">
+          <textarea data-composer-input id="composer" aria-label="聊天输入框" placeholder="输入中文与 English，焦点和 IME 组合期间保持稳定"></textarea>
+          <div class="composer-actions"><span>聚焦、选区与审批保护</span><button id="send-button" type="submit">发送</button></div>
+        </form>
+      </main>
+    </div>
+    <section id="approval" role="dialog" aria-label="工具执行审批" data-approval-key="fixture-approval" hidden>
+      <h2>是否允许操作？</h2><p>审批确认区域应始终静止。</p><button>允许一次</button><button>取消</button>
+    </section>
+    <div id="wine-panel" data-dyou-ui data-wine-owned></div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

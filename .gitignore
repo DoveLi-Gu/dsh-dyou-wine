@@ -1,0 +1,10 @@
+node_modules/
+lib/
+*.tgz
+test-results/
+playwright-report/
+.test-dsh-home/
+.qa/
+.env*
+!.env.example
+*.log

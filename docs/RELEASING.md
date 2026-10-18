@@ -1,0 +1,49 @@
+# GitHub 与 npm 发布
+
+当前候选为 `0.1.0-alpha.10`，正式名「D友の酒 · Dyou Wine」。已通过当前 GitHub 连接核对账号 `DoveLi-Gu`，与既有 `dsh-showcase` 的 remote 一致；计划目标仓库是 `DoveLi-Gu/dsh-dyou-wine`。本轮只准备源码、安装包、公告与工作流，尚未创建该远程仓库、推送或发布。既有 npm 包 `dsh-showcase` 的公开维护者为 `doveli`，实际发布时仍需核对当前 npm 登录身份。
+
+## 上传 GitHub
+
+1. 审阅源码、MIT 许可与 `.gitignore`，确认不提交 `node_modules`、`lib`、`.qa`、DSH profile、临时下载、测试报告、日志、`.env` 或凭据。Alpha.9 的指定 MP3 是有意内置素材，应与 [素材说明](ASSETS.md) 一并审阅；音乐权利不由代码 MIT 许可覆盖。源仓库提交 `package-lock.json`，CI 通过 `npm ci` 重现依赖。
+2. `package.json` 已按经核对账号填写计划仓库的 `repository`、`homepage`、`bugs`；创建远程仓库时使用相同归属与名称。推荐公开源码，以便建立包的 provenance。若改用其他仓库，先同步这三个字段及工作流身份断言。
+3. 配置真实 remote，再提交并推送。CI 会在 Ubuntu／Windows 的 Node 24 执行检查并上传 tarball；未运行的 workflow 不能当作测试结果。
+4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.10` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
+
+不建议直接分发未构建的源码压缩包。优先将经过检查的 `.tgz` 作为 GitHub Release 附件；如直接安装 GitHub spec，使用固定 tag／提交并按 README 处理 pnpm `allowBuilds`。
+
+## 本地发布前检查
+
+```sh
+npm ci
+npx playwright install chromium
+npm run check
+npm pack --ignore-scripts
+npm publish ./dsh-dyou-wine-0.1.0-alpha.10.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
+```
+
+`pack:check` 使用 `npm pack --dry-run --ignore-scripts --json` 检查包内容白名单、入口、bundle 补丁和客户端声明。它不上传文件。`files` 仅包含编译产物、patch、许可证、README／变更记录与必要运行说明；测试夹具、原策划案和开发配置不进入 npm 包。
+
+Alpha.10 的检查结论单列于 TESTING.md／COMPATIBILITY.md；公开前核对最终包的版本、哈希和相应记录，历史版本结论不能代替。检查两个独立效果、固定节奏、既有候选覆盖与交互保护、320 px 简洁面板，以及内置 BGM 的解码、来源链接、无 iframe／平台网络请求、暂停继续、循环、醒酒归零与卸载释放。资源成功加载不能直接标记为已监听物理扬声器。
+
+本版内置由用户指定原投稿 `BV1hXbN6VEKV` 导出的 MP3，录音已进入构建客户端和本地 tarball。设置与声明中的来源链接是署名，不能写成已经取得原权利人许可。录音、词曲和合成声库不适用项目代码 MIT；公开发布记录应如实保留 [素材说明](ASSETS.md) 中的来源及独立权利范围。当前只交付本机安装，尚未执行 GitHub/npm 公开发布。
+
+确认 registry 中该名称和版本的实际归属。此前得到 E404 仅表示当时未查到；不是名称预留，也不能保证账号具有发布权限。
+
+## 首次 npm 发布
+
+维护者完成 npm 登录／双因素认证后，审查上一步 tarball，再执行同样命令去掉 `--dry-run`。这是公开发布操作，应在确认包名、版本、仓库身份和验收记录后由有权限的维护者执行。预发布必须使用 `--tag alpha`，避免占用 `latest`。同一 `name@version` 无法覆盖重发。
+
+## 后续 OIDC 发布
+
+提供的 `.github/workflows/publish.yml` 仅由手动 dispatch 触发，校验输入版本、相应 Git tag 和实际仓库元数据，重新运行完整检查，再发布已检查的 tarball。它固定 `alpha` tag，不使用长期 `NPM_TOKEN`。
+
+配置步骤：
+
+1. 在 GitHub 创建名为 **`npm`** 的 Environment，启用适合该仓库的 required reviewers 与 tag 保护；工作流引用环境本身不会自动配置保护规则。
+2. 首次手动发布创建包后，在 npm 包设置的 Trusted Publisher 中填写 **`DoveLi-Gu`、`dsh-dyou-wine`、`publish.yml` 和环境名 `npm`**。当前新建配置默认只允许 `npm stage publish`，本工作流使用 `npm publish`，须明确允许直接发布。新连接需在创建后两天内首次成功发布；未建立或过期的信任关系会导致工作流失败。
+3. 确保 `package.json.repository.url` 精确匹配实际创建的 `git+https://github.com/DoveLi-Gu/dsh-dyou-wine.git`。
+4. 推送已审核 tag，通过 Actions 手动运行，输入完整包版本。工作流以该 tag 检出；保护环境审核通过后才会进入发布步骤。
+
+工作流使用 GitHub 托管 runner、Node 24 和固定 npm 版本，授予 `id-token: write`。OIDC 要求 npm ≥11.5.1，且可信发布身份必须与仓库／工作流／环境完全一致；来源证明在可信发布时自动生成。详见 [npm Trusted Publishers](https://docs.npmjs.com/trusted-publishers/) 和 [npm provenance](https://docs.npmjs.com/generating-provenance-statements/)。
+
+若改包名、仓库、工作流文件名或环境名，先同步对应的 npm Trusted Publisher 配置。不要通过禁用版本校验、添加虚构 repository 或在仓库写入 token 解决发布失败。

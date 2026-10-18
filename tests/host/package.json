@@ -1,0 +1,10 @@
+{
+  "name": "dsh-dyou-wine-test-seed",
+  "version": "0.0.0-test",
+  "private": true,
+  "type": "module",
+  "main": "./index.mjs",
+  "files": ["index.mjs", "cordis.patch.yml"],
+  "engines": { "dsh": "0.2.0-rc.2" },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}

@@ -1,0 +1,102 @@
+{
+  "name": "dsh-dyou-wine",
+  "version": "0.1.0-alpha.10",
+  "description": "D友の酒 · Dyou Wine: fixed-rhythm page bounce, a flying whale-girl pet and bundled BGM for DeepSeek Harness.",
+  "type": "module",
+  "license": "MIT",
+  "author": "DoveLi-Gu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoveLi-Gu/dsh-dyou-wine.git"
+  },
+  "homepage": "https://github.com/DoveLi-Gu/dsh-dyou-wine#readme",
+  "bugs": {
+    "url": "https://github.com/DoveLi-Gu/dsh-dyou-wine/issues"
+  },
+  "icon": "./assets/icon.svg",
+  "packageManager": "npm@11.15.0",
+  "main": "./lib/host.js",
+  "exports": {
+    ".": "./lib/host.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./icon": "./assets/icon.svg",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "assets/icon.svg",
+    "locale/*.json",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "PRODUCT.md",
+    "DESIGN.md",
+    "docs/COMPATIBILITY.md",
+    "docs/ASSETS.md",
+    "docs/MOTION-REFERENCE.md",
+    "docs/TESTING.md",
+    "docs/RELEASING.md",
+    "docs/RELEASE-NOTES.md"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": "0.2.0-rc.2"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "alpha",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "jelly",
+    "desktop-pet",
+    "whale-girl",
+    "music",
+    "animation"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "test:dsh": "node scripts/dsh-smoke.mjs",
+    "benchmark": "node scripts/benchmark.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "check": "npm run typecheck && npm test && npm run build && npm run test:browser && npm run pack:check",
+    "pack:check": "node scripts/check-package.mjs",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run check"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "~18.3.1",
+    "esbuild": "^0.25.0",
+    "react": "^18.2.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.1.0",
+    "vitest": "^5.0.5"
+  }
+}

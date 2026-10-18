@@ -1,0 +1,68 @@
+name: Publish alpha to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact package version, from an existing reviewed v-prefixed tag
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout reviewed release tag
+        uses: actions/checkout@v6
+        with:
+          ref: refs/tags/v${{ inputs.version }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Use OIDC-capable npm CLI
+        run: npm install --global npm@11.15.0 --ignore-scripts
+      - name: Validate version and repository identity
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFile } from 'node:fs/promises';
+          const pkg = JSON.parse(await readFile('package.json', 'utf8'));
+          assert.equal(pkg.version, process.env.RELEASE_VERSION);
+          assert.match(pkg.version, /^\d+\.\d+\.\d+-alpha\.\d+$/);
+          assert.equal(pkg.name, 'dsh-dyou-wine');
+          assert.equal(pkg.publishConfig.access, 'public');
+          const url = typeof pkg.repository === 'string' ? pkg.repository : pkg.repository?.url;
+          const actual = url?.replace(/^git\+/, '').replace(/\.git$/, '');
+          assert.equal(actual, `https://github.com/${process.env.GITHUB_REPOSITORY}`,
+            'Set package.json.repository to the real GitHub repository before publishing');
+          NODE
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run check
+      - name: Pack checked files
+        run: npm pack --ignore-scripts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-release-candidate
+          path: dsh-dyou-wine-*.tgz
+          if-no-files-found: error
+      - name: Publish reviewed tarball using npm Trusted Publishing
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: npm publish "./dsh-dyou-wine-${RELEASE_VERSION}.tgz" --access public --tag alpha --provenance --ignore-scripts --registry https://registry.npmjs.org
