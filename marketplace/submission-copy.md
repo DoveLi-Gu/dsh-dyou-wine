@@ -26,7 +26,7 @@ dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13 --ignore-scripts
 投稿入口与本轮状态：
 
 - DSH Marketplace：<https://dshmarketplace.dev/submit>，表单已接收，页面确认仓库已排队等待人工审核；备注列明确切 npm 版本、Web 兼容、代码 MIT 与第三方素材范围，并请维护者核对 `No licence` 误报。精选榜另受已有目录条目与提交数要求限制。
-- DSH Plugin Hub：<https://dshpluginhub.dev/zh/submit>，GitHub 登录与预检服务问题待处理，尚未交成候选。
+- DSH Plugin Hub：<https://dshpluginhub.dev/zh/submit>，登录已恢复，预检仍提示检查服务暂时不可用；官网维护者反馈已收到，正式候选待提交。此反馈不计入七项市场投稿。
 - DSHPlugin.io：已提交 <https://github.com/tjsdyy/dshplugin/issues/36>，附简介、仓库、npm 安装目标及演示，待审核。
 - dsh-plugin.org：已提交 <https://github.com/dshplugin/dsh-plugin-hub/issues/281>，待审核。
 - dsh.market：已提交 <https://github.com/2BingLing/dsh-market/issues/255>，OPEN、`submission` 标签，待自动候选检测。

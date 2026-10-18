@@ -20,4 +20,6 @@ dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13 --ignore-scripts
 
 本版实际检查结果见 [TESTING.md](TESTING.md) 的 Alpha.13 节。GitHub 仓库、tag、发行附件与 npm 确切版本已公开，发现 topics 已设置；累计完成两个 PR、三个 Issue 和两个网页表单投稿，除 dsh.pub 外，ydhrdh、DSHPlugin.io、dsh-plugin.org、dsh.market、DSH Marketplace 与 dshx 均待审核、检测或运营处理。当前 `alpha`／`latest` 均指向 Alpha.13；维护者本次验证成功后，Registry 仍以 HTTP 400 拒绝删除 `latest`，暂保留双标签，版本仍为 Alpha，请固定版本安装。实际构建、HTTP 媒体、真实 DSH 与市场检查分别记录，不把其中一项替代另一项。
 
+DSH Plugin Hub 登录已恢复，已登录预检仍提示“检查服务暂时不可用，请稍后重试。”；官网维护者已确认收到人工收录请求，正式候选待提交。该反馈不计入上述七项市场投稿。
+
 未专项验证 Windows 原生 IME、DSH Desktop／TUI、其他 DSH 版本和物理扬声器；固定 120 BPM 动画独立于歌曲，不宣称逐拍精确同步。GitHub 发行附件与 npm 保留原验收 tarball，公开 Registry 的完整性值已比对，未重打包；包内文档中的发布前状态反映当时记录，当前发布状态以本公告和仓库 README 为准。

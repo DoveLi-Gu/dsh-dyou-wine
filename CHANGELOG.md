@@ -12,6 +12,7 @@
 - 首次公开 GitHub 源码、Alpha.13 tag 与发行附件，并设置 9 个发现／分类 topics；复核新增自动目录，无需虚增 TUI 兼容或添加无效识别字段。
 - 将原验收 tarball 发布为 `dsh-dyou-wine@0.1.0-alpha.13`，公开 Registry 已确认版本与完整性值；更正标签状态：维护者本次验证已成功，Registry 仍以 HTTP 400 拒绝删除 `latest`，当前保留 `alpha`／`latest` 双标签，版本仍为 Alpha，推荐精确版本安装。
 - 完成两个 PR、三个 Issue 和两个网页表单投稿：dsh.pub PR #144 已合并并在线收录（社区投稿）；ydhrdh PR #17、DSHPlugin.io Issue #36、dsh-plugin.org Issue #281、dsh.market Issue #255 及 DSH Marketplace／dshx 表单待审核、检测或运营处理。其余入口与准入条件见 `docs/MARKETPLACE.md`。
+- 跟进 DSH Plugin Hub：登录已恢复，预检服务仍暂不可用；官网维护者反馈已收到，正式候选待提交。该反馈不计入上述七项市场投稿。
 
 ## 0.1.0-alpha.12 — 2026-10-18
 

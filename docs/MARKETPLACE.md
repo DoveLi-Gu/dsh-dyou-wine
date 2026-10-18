@@ -33,7 +33,7 @@ GitHub 仓库、`v0.1.0-alpha.13` tag、发行附件与 [npm 确切版本](https
 | `dsh.market`／`2BingLing/dsh-market` | 扫描 `dsh-plugin`、`dsh` 等 topics，随后检测 `cordis.patch.yml` 等真实插件标记；另支持 Issue 投稿。 | 已补投 [Issue #255](https://github.com/2BingLing/dsh-market/issues/255)，状态 OPEN、标签 `submission`，待自动候选检测；无需新增包字段。[第一方规则](https://github.com/2BingLing/dsh-market#收录机制) |
 | `dsh-plugin.org` | 扫描公开仓库的 `dsh-plugin` topic，读取根 `package.json`、README 安装命令和 `apply(ctx)`；源码目录与 npm 插件中心有不同要求。 | 已提交官方手动入口 [Issue #281](https://github.com/dshplugin/dsh-plugin-hub/issues/281)，附确切 npm 安装命令，待审核；站内 `dshTarget` 不作为未经证实的作者 package 字段添加。[收录要求](https://dsh-plugin.org/zh/submit) |
 | Britneycode／`dsh-update-center` | topic 搜索、npm 关键词及 repository 映射；扫描窗口有限。 | 现有字段已覆盖；新仓可能尚未进入其有限候选窗口，不能用多填字段保证立即收录。[第一方说明](https://github.com/Britneycode/dsh-update-center#插件市场) |
-| DSH Plugin Hub／`dshpluginhub.dev` | npm 包／GitHub 仓库／安装命令可公开预检；GitHub 登录后才能交候选，审核前不进入市场搜索或排行榜。 | GitHub 登录与预检服务问题待处理，尚未交成候选。[候选入口](https://dshpluginhub.dev/zh/submit) |
+| DSH Plugin Hub／`dshpluginhub.dev` | npm 包／GitHub 仓库／安装命令可公开预检；GitHub 登录后才能交候选，审核前不进入市场搜索或排行榜。 | 登录已恢复，但已登录预检仍提示“检查服务暂时不可用，请稍后重试。”；官网维护者反馈已收到，正式候选待提交。反馈不计入七项市场投稿。[候选入口](https://dshpluginhub.dev/zh/submit) |
 | `dshx.io` | 独立网站投稿，进入运营队列后处理。 | 无需登录的表单已接收，页面确认“仓库已进入下一轮运营队列。”；待运营收录。[目录入口](https://dshx.io/zh/plugins) |
 | `deepseekdsh.com` | 共享 Awesome 的 `plugins.json` 及 YELEBAI 的 `install-review.json`，缓存 1 小时。 | 未发现独立必要投稿，随相应上游目录更新；不把共享数据的多个界面当成独立审核。[目录入口](https://deepseekdsh.com/plugins/explore)、[Awesome 数据](https://awesome-dsh-plugin.com/plugins.json) |
 
