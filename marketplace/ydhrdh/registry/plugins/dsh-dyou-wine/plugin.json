@@ -1,7 +1,7 @@
 {
   "id": "dsh-dyou-wine",
   "name": "D友の酒 · Dyou Wine",
-  "version": "0.1.0-alpha.12",
+  "version": "0.1.0-alpha.13",
   "description": "Fixed-rhythm page bounce and a flying whale-girl plush with wall reflections for the DSH web interface.",
   "descriptionZh": "让 DSH 网页界面与大肥鱼娘玩偶按固定节奏 Q 弹，玩偶满屏飞行、碰墙反弹。",
   "author": {
@@ -17,8 +17,8 @@
   },
   "install": {
     "target": "git",
-    "spec": "github:DoveLi-Gu/dsh-dyou-wine#v0.1.0-alpha.12",
-    "command": "dsh plugin --profile {profile} add github:DoveLi-Gu/dsh-dyou-wine#v0.1.0-alpha.12"
+    "spec": "github:DoveLi-Gu/dsh-dyou-wine#v0.1.0-alpha.13",
+    "command": "dsh plugin --profile {profile} add github:DoveLi-Gu/dsh-dyou-wine#v0.1.0-alpha.13"
   },
   "repository": "https://github.com/DoveLi-Gu/dsh-dyou-wine",
   "verified": false,

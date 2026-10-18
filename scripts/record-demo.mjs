@@ -39,7 +39,9 @@ await run(['plugin', '--profile', 'wine-demo', 'add', tarball, '--ignore-scripts
 await run(['plugin', '--profile', 'wine-demo', 'add', join(output, JSON.parse(seed.stdout)[0].filename), '--ignore-scripts']);
 const installedRoot = join(home, 'profiles', 'wine-demo', 'node_modules', pkg.name);
 const installedPackage = JSON.parse(await readFile(join(installedRoot, 'package.json'), 'utf8'));
-const installedClientSha256 = createHash('sha256').update(await readFile(join(installedRoot, 'lib/client.js'))).digest('hex');
+const installedClient = await readFile(join(installedRoot, 'lib/client.js'));
+const installedClientSha256 = createHash('sha256').update(installedClient).digest('hex');
+if (installedClient.length >= 1_000_000) throw new Error('Packaged client entry exceeds the marketplace 1,000,000-byte limit.');
 console.log('Installed plugin and deterministic session in an isolated DSH home.');
 const host = spawn(process.execPath, [dshBin, '--profile', 'wine-demo', '--no-open', '--host', '127.0.0.1', '--port', '0'],
   { cwd: root, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -86,6 +88,22 @@ try {
   await page.screenshot({ path: join(output, 'controls.png') });
   await page.locator('[data-action="start"]').click();
   await page.locator('[data-wine-pet] img').waitFor({ state: 'visible' });
+  const sprite = await page.locator('[data-wine-pet] img').evaluate(async image => {
+    await image.decode();
+    const source = new URL(image.src);
+    return { pathname: source.pathname, sameOrigin: source.origin === location.origin,
+      naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight };
+  });
+  const spriteResponse = await page.request.get(new URL('/plugins/dsh-dyou-wine/assets/whale-girl.png', page.url()).href);
+  const spriteBody = await spriteResponse.body();
+  const sourceSprite = await readFile(join(root, 'src/assets/whale-girl.png'));
+  const spriteHttp = { status: spriteResponse.status(), contentType: spriteResponse.headers()['content-type'],
+    bytes: spriteBody.length, sha256: createHash('sha256').update(spriteBody).digest('hex'),
+    sourceSha256: createHash('sha256').update(sourceSprite).digest('hex') };
+  if (!sprite.sameOrigin || sprite.pathname !== '/plugins/dsh-dyou-wine/assets/whale-girl.png'
+    || sprite.naturalWidth <= 0 || sprite.naturalHeight <= 0 || spriteHttp.status !== 200
+    || spriteHttp.contentType?.split(';', 1)[0].trim() !== 'image/png'
+    || spriteHttp.sha256 !== spriteHttp.sourceSha256) throw new Error(`Demo packaged sprite failed: ${JSON.stringify({ sprite, spriteHttp })}`);
   await page.locator('[data-action="toggle"]').click();
   await page.mouse.move(1, 1);
   await sleep(600);
@@ -134,6 +152,7 @@ try {
     '-loop', '0', join(assets, 'demo.gif')], { windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
   const gif = await readFile(join(assets, 'demo.gif'));
   const report = { timestamp: new Date().toISOString(), version: installedPackage.version, installedClientSha256,
+    installedClientBytes: installedClient.length, sprite, spriteHttp,
     source: 'Actual isolated DSH Web; deterministic test session; no model requests or private chats.',
     viewport: { width: 1280, height: 800 }, gif: { path: 'docs/assets/demo.gif', width: 800, height: 500, fps: 15, silent: true,
       bytes: gif.length, sha256: createHash('sha256').update(gif).digest('hex') }, observation, pageErrors: errors };

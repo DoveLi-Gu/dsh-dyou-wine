@@ -189,3 +189,23 @@ test('a rejected recording playback reports an error while both fixed rhythm eff
   await page.keyboard.press('Escape');
   expect(await page.evaluate(() => document.getAnimations().filter(animation => animation.id.startsWith('dsh-dyou-wine:')).length)).toBe(0);
 });
+
+test('a missing local recording reports an error without stopping the page or pet', async ({ page }) => {
+  await page.route(/BV1hXbN6VEKV\.mp3(?:\?|$)/, async route => {
+    if (route.request().resourceType() === 'media') await route.fulfill({ status: 404, body: '' });
+    else await route.continue();
+  });
+  await page.locator('#wine-music-enabled').check();
+  await page.locator('#wine-pet-enabled').check();
+  await page.locator('[data-action=start]').click();
+  await page.mouse.move(1, 1);
+  await expect(page.locator('[data-error]')).toBeVisible();
+  await expect(page.locator('[data-state]')).toContainText('正在律动');
+  await expect(page.locator('[data-wine-pet]')).toHaveCount(1);
+  await expect.poll(() => page.locator('#user-message').evaluate(element =>
+    element.getAnimations().filter(animation => animation.playState === 'running').length)).toBe(1);
+  await expect.poll(() => page.locator('[data-wine-pet]').evaluate(element =>
+    element.getAnimations({ subtree: true }).filter(animation => animation.playState === 'running').length)).toBe(1);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[data-wine-pet]')).toHaveCount(0);
+});

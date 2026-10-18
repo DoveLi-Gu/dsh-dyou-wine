@@ -43,6 +43,7 @@ assert(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-locale'));
 
 const allowed = new Set([
   'package.json', 'lib/host.js', 'lib/client.js', 'cordis.patch.yml',
+  'lib/assets/whale-girl.png', 'lib/assets/BV1hXbN6VEKV.mp3',
   'README.md', 'CHANGELOG.md', 'LICENSE', 'PRODUCT.md', 'DESIGN.md',
   'docs/COMPATIBILITY.md', 'docs/ASSETS.md', 'docs/MOTION-REFERENCE.md', 'docs/TESTING.md', 'docs/RELEASING.md',
   'assets/icon.svg', 'locale/zh.json', 'locale/en.json',
@@ -74,10 +75,15 @@ assert.match(host, /apply/);
 assert.match(client, /window\.__ModuleLoader__\.load/);
 assert(client.includes(JSON.stringify(pkg.name)), 'Browser ModuleLoader id must match package name');
 assert.match(client, /shell\.overlay/);
-const embeddedAudio = client.match(/data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)/);
-assert(embeddedAudio, 'Bundled BGM must be present in the built client');
-assert(Buffer.from(embeddedAudio[1], 'base64').equals(await readFile(resolve(root, 'src/assets/BV1hXbN6VEKV.mp3'))),
-  'Built BGM must match the declared source recording');
+for (const asset of ['whale-girl.png', 'BV1hXbN6VEKV.mp3']) {
+  assert(client.includes(`plugins/dsh-dyou-wine/assets/${asset}`), `Client must use the bundled local route for ${asset}`);
+  assert((await readFile(resolve(root, `lib/assets/${asset}`))).equals(await readFile(resolve(root, `src/assets/${asset}`))),
+    `Separate packaged media must retain the original bytes: ${asset}`);
+}
+for (const entry of ['lib/host.js', 'lib/client.js']) {
+  assert((await readFile(resolve(root, entry))).length <= 1_000_000, `dsh.pub entry size exceeded: ${entry}`);
+}
+assert(!/data:(?:audio|image)\//.test(client), 'Production media must be separate files, not base64 in the entry');
 assert(!client.includes('player.bilibili.com/player.html'), 'The old visible video player must not be shipped');
 assert(patch.includes(pkg.name), 'Bundle patch must reference this host module');
 console.log(`Package checked: ${pkg.name}@${pkg.version}; ${archive.files.length} public files, ${archive.size} packed bytes.`);

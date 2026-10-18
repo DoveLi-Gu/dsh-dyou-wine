@@ -9,6 +9,53 @@ import { chromium } from '@playwright/test';
 import { findDshCli, findNpmCli } from './cli-paths.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const mediaPaths = {
+  audio: '/plugins/dsh-dyou-wine/assets/BV1hXbN6VEKV.mp3',
+  image: '/plugins/dsh-dyou-wine/assets/whale-girl.png',
+};
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+// Use the authenticated browser context's API client: these plugin routes
+// must retain the real host's trust-cookie protection and HTTP semantics.
+async function verifyStaticAsset(page, origin, pathname, sourcePath, mime) {
+  const source = await readFile(sourcePath);
+  const url = new URL(pathname, origin).href;
+  const getResponse = await page.request.get(url);
+  const getBody = await getResponse.body();
+  const getHeaders = getResponse.headers();
+  const headResponse = await page.request.head(url);
+  const headBody = await headResponse.body();
+  const headHeaders = headResponse.headers();
+  const end = Math.min(31, source.length - 1);
+  const rangeResponse = await page.request.get(url, { headers: { Range: `bytes=0-${end}` } });
+  const rangeBody = await rangeResponse.body();
+  const rangeHeaders = rangeResponse.headers();
+  const invalidResponse = await page.request.get(url, { headers: { Range: `bytes=${source.length}-` } });
+  const invalidHeaders = invalidResponse.headers();
+  const contentTypeMatches = value => value?.split(';', 1)[0].trim() === mime;
+  const result = {
+    pathname, sameOrigin: new URL(getResponse.url()).origin === origin,
+    sourceBytes: source.length, sourceSha256: sha256(source),
+    get: { status: getResponse.status(), bytes: getBody.length, sha256: sha256(getBody),
+      contentType: getHeaders['content-type'], contentLength: getHeaders['content-length'],
+      acceptRanges: getHeaders['accept-ranges'] },
+    head: { status: headResponse.status(), bytes: headBody.length,
+      contentType: headHeaders['content-type'], contentLength: headHeaders['content-length'] },
+    range: { status: rangeResponse.status(), bytes: rangeBody.length,
+      contentType: rangeHeaders['content-type'], contentLength: rangeHeaders['content-length'],
+      contentRange: rangeHeaders['content-range'], matchesSource: rangeBody.equals(source.subarray(0, end + 1)) },
+    invalidRange: { status: invalidResponse.status(), contentRange: invalidHeaders['content-range'] },
+  };
+  result.passed = result.sameOrigin && result.get.status === 200 && result.get.sha256 === result.sourceSha256
+    && result.get.bytes === source.length && result.get.contentLength === String(source.length)
+    && contentTypeMatches(result.get.contentType) && result.get.acceptRanges === 'bytes'
+    && result.head.status === 200 && result.head.bytes === 0
+    && result.head.contentLength === String(source.length) && contentTypeMatches(result.head.contentType)
+    && result.range.status === 206 && result.range.bytes === end + 1 && result.range.matchesSource
+    && result.range.contentLength === String(end + 1) && contentTypeMatches(result.range.contentType)
+    && result.range.contentRange === `bytes 0-${end}/${source.length}`
+    && result.invalidRange.status === 416 && result.invalidRange.contentRange === `bytes */${source.length}`;
+  return result;
+}
 const output = join(root, '.qa');
 const profile = 'wine-smoke';
 const home = join(root, '.test-dsh-home', randomUUID());
@@ -110,6 +157,13 @@ try {
   });
   await page.goto(address, { waitUntil: 'networkidle' });
   console.log('Loaded real DSH browser UI.');
+  const hostOrigin = new URL(page.url()).origin;
+  const staticMedia = {
+    audio: await verifyStaticAsset(page, hostOrigin, mediaPaths.audio, join(root, 'src/assets/BV1hXbN6VEKV.mp3'), 'audio/mpeg'),
+    image: await verifyStaticAsset(page, hostOrigin, mediaPaths.image, join(root, 'src/assets/whale-girl.png'), 'image/png'),
+  };
+  const staticMediaPassed = Object.values(staticMedia).every(asset => asset.passed);
+  console.log('Verified authenticated same-origin GET, HEAD and Range requests for packaged media.');
   const workspace = page.getByText('D友の酒 验收工作区', { exact: true }).first();
   await workspace.waitFor({ state: 'visible', timeout: 30_000 });
   const seededChat = page.getByText('D友の酒 · 本地验收', { exact: true }).first();
@@ -132,7 +186,7 @@ try {
   const musicDefaults = await page.evaluate(() => ({
     enabled: document.querySelector('#wine-music-enabled').checked,
     playingAudio: window.__wineAudioElements.filter(media => !media.paused).length,
-    bundledAudio: window.__wineAudioElements.filter(media => media.getAttribute('src')?.startsWith('data:audio/')).length,
+    bundledAudio: window.__wineAudioElements.filter(media => media.hasAttribute('data-wine-audio')).length,
     video: document.querySelectorAll('iframe,video').length,
   }));
   const musicCredit = await page.locator('[data-wine-music-source]').evaluate(link => ({
@@ -298,7 +352,11 @@ try {
       minScaleY: Math.min(...samples.map(s => s.sy)), maxScaleY: Math.max(...samples.map(s => s.sy)),
       sameDirection: samples.filter(s => (s.sx - 1) * (s.sy - 1) > 0.0001).length,
       hostEffects: document.getAnimations().filter(a => a.id.startsWith('dsh-dyou-wine:') && !root.contains(a.effect.target)).length,
-      source: root.querySelector('img').src.startsWith('data:image/png;'), viewport: { width: innerWidth, height: innerHeight } };
+      source: root.querySelector('img').src,
+      sourceSameOrigin: new URL(root.querySelector('img').src).origin === location.origin,
+      sourcePath: new URL(root.querySelector('img').src).pathname,
+      naturalWidth: root.querySelector('img').naturalWidth, naturalHeight: root.querySelector('img').naturalHeight,
+      viewport: { width: innerWidth, height: innerHeight } };
   });
   await page.screenshot({ path: join(output, 'dsh-host-pet.png'), fullPage: true });
   await page.emulateMedia({ colorScheme: 'dark' });
@@ -319,7 +377,8 @@ try {
   const petPassed = petMotion.frames > 100 && petMotion.stable && petMotion.maxOverflow < 0.2
     && petMotion.reversals.x > 0 && petMotion.reversals.y > 0 && petMotion.sameDirection === 0
     && petMotion.minScaleY < 0.9 && petMotion.maxScaleY > 1.1 && petMotion.hostEffects === 0
-    && petMotion.source && petPaused && petCleaned;
+    && petMotion.sourceSameOrigin && petMotion.sourcePath === mediaPaths.image
+    && petMotion.naturalWidth > 0 && petMotion.naturalHeight > 0 && petPaused && petCleaned;
   // Verify both effects together in the installed bundle, on the actual DSH renderer.
   await page.locator('#wine-page-enabled').check();
   await page.locator('#wine-pet-enabled').check();
@@ -388,33 +447,34 @@ try {
   const musicEnabledWhileStopped = await page.evaluate(() => ({
     enabled: document.querySelector('#wine-music-enabled').checked,
     playingAudio: window.__wineAudioElements.filter(media => !media.paused).length,
-    bundledAudio: window.__wineAudioElements.filter(media => media.getAttribute('src')?.startsWith('data:audio/')).length,
+    bundledAudio: window.__wineAudioElements.filter(media => media.hasAttribute('data-wine-audio')).length,
   }));
   await page.locator('[data-action=start]').click();
   await page.waitForFunction(() => window.__wineAudioElements.some(media =>
-    media.getAttribute('src')?.startsWith('data:audio/') && media.readyState === 4 && !media.paused),
+    media.hasAttribute('data-wine-audio') && media.readyState === 4 && !media.paused),
   undefined, { timeout: 20_000 });
   const musicStarted = await page.evaluate(async () => {
-    const media = window.__wineAudioElements.find(media => media.getAttribute('src')?.startsWith('data:audio/'));
+    const media = window.__wineAudioElements.find(media => media.hasAttribute('data-wine-audio'));
     window.__wineBundledMusicWitness = media;
-    const bytes = Uint8Array.from(atob(media.src.slice(media.src.indexOf(',') + 1)), char => char.charCodeAt(0));
-    const digest = await crypto.subtle.digest('SHA-256', bytes);
     return {
       nativeAudio: media instanceof HTMLAudioElement, duration: media.duration, readyState: media.readyState,
       paused: media.paused, muted: media.muted, loop: media.loop, volume: media.volume,
       currentTime: media.currentTime, connected: media.isConnected,
       hidden: media.hidden, owned: media.hasAttribute('data-wine-owned'), bundled: media.hasAttribute('data-wine-audio'),
-      sourceMime: media.src.slice(0, media.src.indexOf(',')), decodedBytes: bytes.byteLength,
-      sha256: [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join(''),
+      source: media.src, sourceSameOrigin: new URL(media.src).origin === location.origin,
+      sourcePath: new URL(media.src).pathname,
       iframeOrVideo: document.querySelectorAll('iframe,video').length,
       mediaError: media.error?.code ?? null,
     };
   });
+  musicStarted.sourceMime = staticMedia.audio.get.contentType;
+  musicStarted.fetchedBytes = staticMedia.audio.get.bytes;
+  musicStarted.sha256 = staticMedia.audio.get.sha256;
   await pause(650);
   const musicAdvanced = await page.evaluate(() => ({
     currentTime: window.__wineBundledMusicWitness.currentTime,
     paused: window.__wineBundledMusicWitness.paused,
-    sameElement: window.__wineAudioElements.filter(media => media.getAttribute('src')?.startsWith('data:audio/')).length === 1,
+    sameElement: window.__wineAudioElements.filter(media => media.hasAttribute('data-wine-audio')).length === 1,
   }));
   await page.screenshot({ path: join(output, 'dsh-host-bundled-music.png'), fullPage: true });
   await page.locator('[data-action=pause]').click();
@@ -431,7 +491,7 @@ try {
     const before = media.currentTime;
     await new Promise(resolve => setTimeout(resolve, 650));
     return { paused: media.paused, before, after: media.currentTime,
-      sameElement: window.__wineAudioElements.filter(element => element.getAttribute('src')?.startsWith('data:audio/')).length === 1 };
+      sameElement: window.__wineAudioElements.filter(element => element.hasAttribute('data-wine-audio')).length === 1 };
   });
   await page.keyboard.press('Escape');
   const musicEscaped = await page.evaluate(async () => {
@@ -447,7 +507,7 @@ try {
     defaults: musicDefaults, enabledWhileStopped: musicEnabledWhileStopped, credit: musicCredit,
     started: musicStarted, advanced: musicAdvanced,
     paused: musicPaused, resumed: musicResumed, escaped: musicEscaped,
-    sourceSha256: recordingSha256, externalBilibiliRequests,
+    sourceSha256: recordingSha256, http: staticMedia.audio, externalBilibiliRequests,
     screenshot: '.qa/dsh-host-bundled-music.png',
     limits: ['Native HTMLAudio playback and decoded media clock are verified; physical speaker output is not monitored.',
       'Plugin hot-unload is covered by the browser lifecycle tests, not this real-host smoke run.'],
@@ -460,7 +520,8 @@ try {
     && musicStarted.nativeAudio && musicStarted.duration > 180 && musicStarted.readyState === 4
     && !musicStarted.paused && !musicStarted.muted && musicStarted.loop && musicStarted.volume === 0.5
     && musicStarted.connected && musicStarted.hidden && musicStarted.owned && musicStarted.bundled
-    && musicStarted.sourceMime.startsWith('data:audio/')
+    && musicStarted.sourceSameOrigin && musicStarted.sourcePath === mediaPaths.audio
+    && musicStarted.sourceMime?.split(';', 1)[0].trim() === 'audio/mpeg' && staticMedia.audio.passed
     && musicStarted.sha256 === recordingSha256 && musicStarted.iframeOrVideo === 0 && musicStarted.mediaError === null
     && !musicAdvanced.paused && musicAdvanced.sameElement && musicAdvanced.currentTime > musicStarted.currentTime + 0.25
     && musicPaused.paused && Math.abs(musicPaused.after - musicPaused.before) < 0.02
@@ -469,12 +530,17 @@ try {
     && musicEscaped.before === 0 && musicEscaped.after === 0 && musicEscaped.remainingEffects === 0
     && musicEscaped.remainingPet === 0 && externalBilibiliRequests.length === 0;
   const hostPackage = JSON.parse(await readFile(resolve(dshBin, '../../package.json'), 'utf8'));
-  const installedClientSha256 = createHash('sha256').update(await readFile(join(home, 'profiles', profile, 'node_modules', 'dsh-dyou-wine', 'lib', 'client.js'))).digest('hex');
+  const installedClient = await readFile(join(home, 'profiles', profile, 'node_modules', 'dsh-dyou-wine', 'lib', 'client.js'));
+  const installedClientSha256 = sha256(installedClient);
+  const installedClientBytes = installedClient.length;
+  const clientEntryWithinMarketplaceLimit = installedClientBytes < 1_000_000;
   const report = {
     kind: 'actual-dsh-isolated-profile', timestamp: new Date().toISOString(),
     passed: errors.length === 0 && emergencyStopAnimations === 0 && animationsAfterStop === 0 && Object.values(coverage).every(count => count > 0) && referencePassed
-      && codeMotion.effectiveWrappers > 0 && codeMotion.scrollingSurfaces === 0 && petPassed && combinedPassed && bundledMusicPassed,
+      && codeMotion.effectiveWrappers > 0 && codeMotion.scrollingSurfaces === 0 && petPassed && combinedPassed && bundledMusicPassed
+      && staticMediaPassed && clientEntryWithinMarketplaceLimit,
     dshVersion: hostPackage.version, browserVersion: browser.version(), installedClientSha256,
+    installedClientBytes, clientEntryWithinMarketplaceLimit, staticMedia, staticMediaPassed,
     tarball, home, address: new URL(address).origin, panelLoaded: true, animatedElements, coverage, codeMotion,
     emergencyStopAnimations, animationsAfterStop, referenceMotion, referencePassed, coverageMode: 'own or inherited; one effect per ancestor chain', pageErrors: errors,
     petMotion, petPaused, petCleaned, petPassed, petScreenshot: '.qa/dsh-host-pet.png',
@@ -487,6 +553,8 @@ try {
   };
   await writeFile(join(output, 'dsh-host-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   if (errors.length) throw new Error(`Real DSH page errors: ${errors.join('; ')}`);
+  if (!staticMediaPassed) throw new Error(`Real DSH static media HTTP contract failed: ${JSON.stringify(staticMedia)}`);
+  if (!clientEntryWithinMarketplaceLimit) throw new Error(`Installed client entry exceeds the 1,000,000-byte marketplace limit: ${installedClientBytes}`);
   if (!bundledMusicPassed) throw new Error(`Real DSH bundled music failed: ${JSON.stringify(bundledMusic)}`);
   if (!combinedPassed) throw new Error(`Real DSH combined motion failed: ${JSON.stringify({ combinedMotion, petSurvivedPageOff, pageSurvivedPetOff, combinedCleaned })}`);
   if (!petPassed) throw new Error(`Real DSH flying pet failed: ${JSON.stringify({ petMotion, petPaused, petCleaned })}`);

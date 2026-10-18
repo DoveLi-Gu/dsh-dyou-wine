@@ -57,12 +57,20 @@ for (const field of ['name', 'description', 'descriptionZh', 'license', 'categor
 assert.equal(entry.category, 'web');
 await access(resolve(root, 'docs/MARKETPLACE.md'));
 
-// This reports a real third-party gate; local metadata checks cannot waive it.
-const clientBytes = (await readFile(resolve(root, 'lib/client.js'))).length;
-const tracked = spawnSync('git', ['ls-files', '--', 'lib/host.js', 'lib/client.js'], { cwd: root, encoding: 'utf8' });
+// Check the real, reproducible distribution entries, not a stub delegating to
+// an oversized JavaScript file. Media is intentionally separate package data.
+const distribution = ['lib/host.js', 'lib/client.js', 'lib/assets/whale-girl.png', 'lib/assets/BV1hXbN6VEKV.mp3'];
+const tracked = spawnSync('git', ['ls-files', '--', ...distribution], { cwd: root, encoding: 'utf8' });
 if (tracked.error || tracked.status !== 0) throw new Error('Cannot verify committed runtime entries');
 const committed = tracked.stdout.trim().split(/\r?\n/).filter(Boolean);
-console.log(`Discovery preparation checked: ${topics.length} topics, ${screenshots.length} real screenshots and 3 submission drafts; nothing submitted.`);
-if (clientBytes > 1_000_000 || committed.length !== 2) {
-  console.log(`dsh.pub pending: client ${clientBytes} bytes (limit 1000000); committed runtime entries ${committed.length}/2. See docs/MARKETPLACE.md.`);
+assert.equal(committed.length, distribution.length, 'Stage and commit real entry files and packaged assets for GitHub-source admission');
+for (const path of distribution) {
+  const bytes = await readFile(resolve(root, path));
+  if (path.endsWith('.js')) assert(bytes.length <= 1_000_000, `dsh.pub entry limit exceeded: ${path}`);
+  const recorded = spawnSync('git', ['show', `:${path}`], { cwd: root, maxBuffer: 16 * 1024 * 1024 });
+  assert.equal(recorded.status, 0, `Cannot read staged distribution: ${path}`);
+  assert(bytes.equals(recorded.stdout), `Rebuilt file differs from committed/staged distribution: ${path}`);
 }
+const clientBytes = (await readFile(resolve(root, 'lib/client.js'))).length;
+console.log(`Discovery preparation checked: ${topics.length} topics, ${screenshots.length} real screenshots and 3 submission drafts; nothing submitted.`);
+console.log(`dsh.pub local distribution gate passed: client ${clientBytes} bytes, 4 reproducible distribution files; remote submission and approval remain pending.`);

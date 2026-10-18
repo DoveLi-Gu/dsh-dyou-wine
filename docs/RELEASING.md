@@ -1,13 +1,13 @@
 # GitHub 与 npm 发布
 
-当前候选为 `0.1.0-alpha.12`，正式名「D友の酒 · Dyou Wine」。本版补充市场元数据、截图清单、投稿草案及自检，生产运行时沿用 Alpha.11；保留已有 Alpha.10／Alpha.11 本地 tag，不移动它们。此前已通过 GitHub 连接核对账号 `DoveLi-Gu`，与既有 `dsh-showcase` 的 remote 一致；计划目标仓库是 `DoveLi-Gu/dsh-dyou-wine`。本轮只准备源码、安装包、公告与市场资料，尚未创建该远程仓库、推送或发布。既有 npm 包 `dsh-showcase` 的公开维护者为 `doveli`，实际发布时仍需核对当前 npm 登录身份。
+当前候选为 `0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将媒体拆为包内独立资源，通过 WebServer 提供，并将真实分发入口加入 Git；双效果、曲线和完整音轨保留。历史本地 tag 不移动。此前已通过 GitHub 连接核对账号 `DoveLi-Gu`，与既有 `dsh-showcase` 的 remote 一致；计划目标仓库是 `DoveLi-Gu/dsh-dyou-wine`。本轮准备并本地验证分发文件，尚未创建该远程仓库、推送或发布。既有 npm 包 `dsh-showcase` 的公开维护者为 `doveli`，实际发布时仍需核对当前 npm 登录身份。
 
 ## 上传 GitHub
 
-1. 审阅源码、MIT 许可与 `.gitignore`，确认不提交 `node_modules`、`lib`、`.qa`、DSH profile、临时下载、测试报告、日志、`.env` 或凭据。Alpha.9 的指定 MP3 是有意内置素材，应与 [素材说明](ASSETS.md) 一并审阅；音乐权利不由代码 MIT 许可覆盖。源仓库提交 `package-lock.json`，CI 通过 `npm ci` 重现依赖。
+1. 审阅源码、MIT 许可与 `.gitignore`，确认不提交 `node_modules`、`.qa`、DSH profile、临时下载、测试报告、日志、`.env` 或凭据。Alpha.13 起明确提交四份构建分发文件：`lib/host.js`、`lib/client.js` 及 `lib/assets` 的原 PNG／MP3；每次构建与 Git 中产物比对，保证入口可被源码市场读取。其余临时构建文件仍忽略。指定 MP3 应与 [素材说明](ASSETS.md) 一并审阅；音乐权利不由代码 MIT 许可覆盖。源仓库提交 `package-lock.json`，CI 通过 `npm ci` 重现依赖。
 2. `package.json` 已按经核对账号填写计划仓库的 `repository`、`homepage`、`bugs`；创建远程仓库时使用相同归属与名称。推荐公开源码，以便建立包的 provenance。若改用其他仓库，先同步这三个字段及工作流身份断言。
 3. 配置真实 remote，再提交并推送。CI 会在 Ubuntu／Windows 的 Node 24 执行检查并上传 tarball；未运行的 workflow 不能当作测试结果。
-4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.12` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
+4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.13` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
 
 市场设置还可使用源码中的 `marketplace/github-topics.json`；它是待执行的 GitHub API 请求体，不会被 GitHub 自动读取。公开后按 [市场准备](MARKETPLACE.md) 核查自动扫描和独立投稿，保留每个平台的实际收录状态。预发布保持 `alpha`，不为市场检索把未经稳定验收的版本设成 latest。`screenshots.json` 与 PNG／GIF 展示图只放入源码，不进入 npm 包。
 
@@ -20,7 +20,7 @@ npm ci
 npx playwright install chromium
 npm run check
 npm pack --ignore-scripts
-npm publish ./dsh-dyou-wine-0.1.0-alpha.12.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
+npm publish ./dsh-dyou-wine-0.1.0-alpha.13.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
 ```
 
 `pack:check` 使用 `npm pack --dry-run --ignore-scripts --json` 检查包内容白名单、入口、bundle 补丁和客户端声明。它不上传文件。`files` 仅包含编译产物、patch、许可证、README／变更记录与必要运行说明；测试夹具、原策划案和开发配置不进入 npm 包。
@@ -29,7 +29,7 @@ Alpha.10 已通过干净副本安装与独立构建、47 项单元测试、36 �
 
 运行验收应检查两个独立效果、固定节奏、既有候选覆盖与交互保护、320 px 简洁面板，以及内置 BGM 的解码、来源链接、无 iframe／平台网络请求、暂停继续、循环、醒酒归零与卸载释放。资源成功加载不能直接标记为已监听物理扬声器。
 
-本版内置由用户指定原投稿 `BV1hXbN6VEKV` 导出的 MP3，录音已进入构建客户端和本地 tarball。设置与声明中的来源链接是署名，不能写成已经取得原权利人许可。录音、词曲和合成声库不适用项目代码 MIT；公开发布记录应如实保留 [素材说明](ASSETS.md) 中的来源及独立权利范围。当前只交付本机安装，尚未执行 GitHub/npm 公开发布。
+本版内置由用户指定原投稿 `BV1hXbN6VEKV` 导出的 MP3，录音以独立文件放入包内 `lib/assets`，随本地 tarball 提供。设置与声明中的来源链接是署名，不能写成已经取得原权利人许可。录音、词曲和合成声库不适用项目代码 MIT；公开发布记录应如实保留 [素材说明](ASSETS.md) 中的来源及独立权利范围。当前只交付本机安装，尚未执行 GitHub/npm 公开发布。
 
 确认 registry 中该名称和版本的实际归属。此前得到 E404 仅表示当时未查到；不是名称预留，也不能保证账号具有发布权限。
 

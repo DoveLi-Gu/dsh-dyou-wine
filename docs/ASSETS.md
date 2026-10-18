@@ -26,7 +26,7 @@
 音频：[BV1hXbN6VEKV](https://www.bilibili.com/video/BV1hXbN6VEKV/)
 
 - 来源：[活跃黑江乐《🥳kkr：⚡️‌朋友的酒🍺DJ 完整版⚡️‌》](https://www.bilibili.com/video/BV1hXbN6VEKV/)，`bvid=BV1hXbN6VEKV`，`aid=117229689506978`，`cid=41667726578`，公开投稿时长 188 秒。投稿说明基于 Synthesizer V 夢ノ結唱 HALO；没有替换为原唱或其他 DJ 版本。
-- Alpha.9 按用户指定来源导出音轨：使用 yt-dlp 下载原投稿音频格式 `30280`，以 FFmpeg／libmp3lame、质量参数 `-q:a 4` 转为 `src/assets/BV1hXbN6VEKV.mp3`。构建时内嵌客户端 data URL；不打包视频。
+- Alpha.9 按用户指定来源导出音轨：使用 yt-dlp 下载原投稿音频格式 `30280`，以 FFmpeg／libmp3lame、质量参数 `-q:a 4` 转为 `src/assets/BV1hXbN6VEKV.mp3`。Alpha.9–12 曾内嵌客户端 data URL；Alpha.13 改为同字节复制到 `lib/assets/BV1hXbN6VEKV.mp3`，通过 DSH Host 同源固定路由提供，仍不打包视频。玩偶 PNG 同样原样复制到 `lib/assets/whale-girl.png`，未裁剪、重采样或替换素材。
 - 最终 MP3：187.370667 秒，48,000 Hz 双声道，3,391,068 bytes（约 3.23 MiB），平均码率 144,785 bit/s；SHA256：`a60fc8c125d82a26c101e9b75ad36e9d1cddbc541a44ea39958d90cebac5896d`。此处为实测编码文件时长，投稿页面标示的 188 秒为显示时长。
 - BGM 默认关闭；启用后固定 50% 音量循环播放，不创建 iframe，不请求 B 站播放器和媒体服务器。暂停与后台暂停保留进度，恢复继续，醒酒／Escape 回到开头，卸载释放媒体来源与监听器。有声播放受浏览器策略约束。
 - 动画仍以固定 120 BPM 运行，音频不参与视觉时钟；未测定或承诺歌曲逐拍精确同步。
@@ -34,9 +34,9 @@
 
 ## 其他参考与测试素材
 
-- `docs/assets/screenshot-running.png` 与 `screenshot-controls.png` 为 Alpha.11 隔离 DSH Web 录制过程的原始截图，1280 × 800；仅包含上文确定性测试会话和插件界面，不含私人对话。Alpha.12 的根目录 `screenshots.json` 将这两张 PNG 和原演示 GIF 明确列为市场图片，避免自动采集 README 的赞助 Logo。PNG 同样只进入 GitHub 源码，不进入 npm 安装包。
+- `docs/assets/screenshot-running.png` 与 `screenshot-controls.png` 已于 Alpha.13 从隔离 DSH Web 重新录制，1280 × 800；仅包含确定性测试会话和插件界面，不含私人对话。根目录 `screenshots.json` 将这两张 PNG 和演示 GIF 明确列为市场图片，避免自动采集 README 的赞助 Logo。PNG 同样只进入 GitHub 源码，不进入 npm 安装包。
 
-- `docs/assets/demo.gif` 是本项目在隔离 DSH Web profile 中录制的实际运行画面：固定测试会话、界面律动与飞行玩偶同时开启、上头档、120 BPM。通过 `scripts/record-demo.mjs` 录制后使用 FFmpeg 原速裁去准备过程并转为 12 秒、800 × 500、15 fps 无声循环 GIF；未替换宿主组件、未请求模型、未使用私人聊天。画面中的角色沿用上文说明，不因此扩展第三方权利。该 GIF 仅供 GitHub 展示，不进入 npm 安装包。
+- `docs/assets/demo.gif` 是 Alpha.13 在隔离 DSH Web profile 中重新录制的实际运行画面：固定测试会话、界面律动与飞行玩偶同时开启、上头档、120 BPM。通过 `scripts/record-demo.mjs` 录制后使用 FFmpeg 原速裁去准备过程并转为 12 秒、800 × 500、15 fps 无声循环 GIF；未替换宿主组件、未请求模型、未使用私人聊天。文件为 9,690,259 bytes，SHA256 `edf43484f0fbd159bde95760aeb474a5302a16901f9366790f8d36da8868c375`。画面中的角色沿用上文说明，不因此扩展第三方权利。该 GIF 仅供 GitHub 展示，不进入 npm 安装包。
 
 - [参考动效](MOTION-REFERENCE.md) 仅在本地观察分析；包内不包含参考视频画面、角色原图或其他参考录音。上述用户明确指定的 BGM 是 Alpha.9 新增的独立素材记录。
 - 简洁界面不提供本地文件选择；底层本地媒体逻辑仍保留兼容与测试用途，没有新增上传或系统音频采集接口。

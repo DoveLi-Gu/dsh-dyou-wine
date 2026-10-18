@@ -1,5 +1,11 @@
 node_modules/
-lib/
+/lib/*
+!/lib/host.js
+!/lib/client.js
+!/lib/assets/
+/lib/assets/*
+!/lib/assets/whale-girl.png
+!/lib/assets/BV1hXbN6VEKV.mp3
 *.tgz
 test-results/
 playwright-report/

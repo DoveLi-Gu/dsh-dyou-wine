@@ -27,7 +27,11 @@ const client = await build({
   format: 'cjs',
   target: 'es2022',
   external: ['react'],
-  loader: { '.png': 'dataurl', '.webp': 'dataurl', '.mp3': 'dataurl' },
+  // Keep real program code in the ModuleLoader entry. Media is served by the
+  // plugin's two fixed WebServer routes from the files emitted alongside it.
+  loader: { '.png': 'file', '.webp': 'file', '.mp3': 'file' },
+  assetNames: 'assets/[name]',
+  publicPath: 'plugins/dsh-dyou-wine',
   write: false,
   legalComments: 'none',
   metafile: true,
@@ -47,4 +51,8 @@ const registration = `// DSH lazy browser module. React is supplied by the host.
   `    const module = { exports: {} };\n    const exports = module.exports;\n${js.text}\n` +
   `    return module.exports;\n  },\n});\n`;
 await writeFile(resolve(root, 'lib/client.js'), registration);
+for (const file of client.outputFiles.filter(file => !file.path.endsWith('.js'))) {
+  await mkdir(dirname(file.path), { recursive: true });
+  await writeFile(file.path, file.contents);
+}
 console.log(`Built ${pkg.name}@${pkg.version}: lib/host.js, lib/client.js`);

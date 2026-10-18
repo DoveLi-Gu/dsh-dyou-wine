@@ -1,6 +1,18 @@
 # 测试与验收记录
 
-当前发布候选：`0.1.0-alpha.12`，正式名「D友の酒 · Dyou Wine」。本版补充插件市场元数据、截图清单、独立投稿草案和自检，生产运行时代码沿用 Alpha.11。以下各版本分别记录实际执行范围。
+当前发布候选：`0.1.0-alpha.13`，正式名「D友の酒 · Dyou Wine」。本版将 PNG／MP3 拆为包内独立资源，Host 提供同源静态路径，真实编译入口和媒体加入 Git。以下各版本分别记录实际执行范围。
+
+## Alpha.13 静态媒体与 dsh.pub 入口检验
+
+2026-10-18，`npm run check` 通过：类型检查、69 项测试（含新增 22 项真实 HTTP／Cordis 生命周期测试）、构建、37 项浏览器测试、市场资料检查及 21 文件包检查。日志 `.qa/release-alpha13/check.log`。新增浏览器用例验证媒体 HTTP 加载失败时显示错误，界面与玩偶仍按原固定时钟运行。
+
+- `lib/client.js` 从 6,919,317 bytes 降至 **80,268 bytes**，包含完整业务代码和 ModuleLoader 注册；PNG／MP3 原字节放入 `lib/assets`。Host 同样小于 1,000,000 bytes。四个真实分发文件纳入 Git，并在自检中对比重建字节与版本记录，避免只提交空入口或遗留旧产物。
+- Host 测试覆盖固定两路 GET／HEAD、Content-Type／Length、闭合／开放／后缀 Range、206／416、If-Range、缓存校验、405、读取错误、注入激活、路由回滚及卸载终止活动流；请求参数不会变成用户磁盘路径。
+- 真实 DSH `0.2.0-rc.2` 安装本版 tarball 后验收通过：client 80,268 bytes、SHA256 `e2475884598461b03ad60ded541efd55f70d6fab1e32db9b1e86a2f42df7f82d`。玩偶 PNG 解码、飞行反射、双效果固定周期和清理通过，零 pageerror；报告 `.qa/release-alpha13/dsh-host-report.json`。
+- 两份媒体的同源 HTTP GET／HEAD 均 200，32 字节 Range 为 206，越界为 416；Content-Type、Length、Content-Range 和完整资源 SHA256 与源文件相同。原生音乐解码 187.370667 秒，readyState 4、volume 0.5、循环，进度、暂停继续和 Escape 归零通过，无 iframe／视频或 B 站媒体请求。物理扬声器输出未监听。
+- 使用固定上游 dsh.pub commit `d93c8bf289c5fb045ccad77ea4610cce0d895b97` 的原投稿与 Topic 检查逻辑，传输替换为本地文件读取；工作树候选通过，边界 1,000,000 bytes 接受、1,000,001 bytes 拒绝。最终提交后从实际 Git blob 重跑的结果保存于 `.qa/release-alpha13/dshpub-git-admission.json`。这验证本地分发闭包，不代表远程市场已收录。
+
+完整资源 HTTP、隔离 Host、录制及最终文件哈希证据集中于 `.qa/release-alpha13/`；本机日常更新与内置浏览器预览独立记录于 `.qa/deployment/static-alpha13/installation.json`，不由隔离测试推断。未重新运行 60 秒性能对照或干净副本构建；旧版本结果单列。GitHub／npm 与收录申请仍未公开执行。
 
 ## Alpha.12 市场发现准备检验
 
