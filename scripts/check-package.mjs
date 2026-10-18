@@ -36,6 +36,8 @@ assert.equal(pkg.engines?.dsh, '0.2.0-rc.2');
 assert.equal(pkg.publishConfig?.access, 'public');
 assert.equal(pkg.publishConfig?.tag, 'alpha');
 assert.equal(pkg.repository?.url, 'git+https://github.com/DoveLi-Gu/dsh-dyou-wine.git');
+assert(pkg.keywords.includes('dsh-plugin'));
+assert.deepEqual(pkg.dsh?.marketplace, { profiles: ['web'], requiresRestart: true, manualSteps: false });
 assert(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-layout'));
 assert(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-locale'));
 
@@ -44,7 +46,7 @@ const allowed = new Set([
   'README.md', 'CHANGELOG.md', 'LICENSE', 'PRODUCT.md', 'DESIGN.md',
   'docs/COMPATIBILITY.md', 'docs/ASSETS.md', 'docs/MOTION-REFERENCE.md', 'docs/TESTING.md', 'docs/RELEASING.md',
   'assets/icon.svg', 'locale/zh.json', 'locale/en.json',
-  'docs/RELEASE-NOTES.md',
+  'docs/RELEASE-NOTES.md', 'docs/MARKETPLACE.md',
 ]);
 const actual = new Set(archive.files.map((entry) => entry.path));
 for (const path of allowed) assert(actual.has(path), `Required package file missing: ${path}`);

@@ -1,6 +1,18 @@
 # 测试与验收记录
 
-当前发布候选：`0.1.0-alpha.11`，正式名「D友の酒 · Dyou Wine」。本版新增演示录制、README 宣传及测试发现范围配置，生产运行时代码沿用 Alpha.10。以下各版本分别记录实际执行范围。
+当前发布候选：`0.1.0-alpha.12`，正式名「D友の酒 · Dyou Wine」。本版补充插件市场元数据、截图清单、独立投稿草案和自检，生产运行时代码沿用 Alpha.11。以下各版本分别记录实际执行范围。
+
+## Alpha.12 市场发现准备检验
+
+2026-10-18，`npm run check` 通过：类型检查、47 项单元测试（7 文件）、构建、36 项浏览器测试、新增市场资料自检，以及 19 文件 npm 包检查。证据 `.qa/release-alpha12/check.log`；最终打包、发布演练与归档哈希保存在同目录。
+
+- 校验 npm `dsh-plugin` 关键词、`dsh.bundle`、`dsh.marketplace` 的 Web／重启／安装步骤声明、保持不变的 `engines.dsh` 和 `alpha` 发布标签。
+- 检查 9 个待设置的 GitHub topics、3 个仓库截图路径的实际 PNG／GIF 文件头与安全路径、3 份投稿稿件的名称、版本、来源、分类及未审核状态。两张 PNG 经独立视觉复核，只包含 Alpha.11 的隔离验收会话，没有私人聊天。
+- ydhrdh JSON 草案另与当日保存的上游 JSON Schema 静态比对，无错误；未运行上游 CI、发起上游 PR、填写站点表单或提交候选。新自检属于本地资料一致性检查，不是第三方市场的准入证明。
+- 包白名单新增 `docs/MARKETPLACE.md`，共 19 文件；`screenshots.json`、展示 PNG／GIF、赞助 Logo、`marketplace/` 草案、开发脚本及测试资料不进入 npm 包。
+- 生产客户端 SHA256 仍为 `a125b3e497712b67eea08cb51773e956a43a2386c64716daadb2ecd731bbaf4e`，Host SHA256 仍为 `141aa312603caa693062d2157bc6de7b096d28f590af095f3d3ade79aeb9782d`。未改 `src/`，本轮未重新执行真实 DSH 录制、性能对照或干净副本构建，历史证据单列于下文。
+
+自检如实报告 dsh.pub 未满足：Git 源码树没有提交 `lib/host.js`／`lib/client.js`，且 client 为 6,919,317 bytes，超过对方 1,000,000 bytes 限制。GitHub／npm 尚未公开、topics 尚未远程设置、各市场均待发布后扫描或审核；不能将本地检查通过记为“加入所有市场”。详见 [市场准备](MARKETPLACE.md)。日常 DSH profile 未修改。
 
 ## Alpha.11 演示与发布材料检验
 

@@ -1,13 +1,15 @@
 # GitHub 与 npm 发布
 
-当前候选为 `0.1.0-alpha.11`，正式名「D友の酒 · Dyou Wine」。本版补充真实宿主演示、隔离录制脚本与 README 宣传材料，生产运行时沿用 Alpha.10；保留已有 `v0.1.0-alpha.10` 本地 tag，不移动它。已通过当前 GitHub 连接核对账号 `DoveLi-Gu`，与既有 `dsh-showcase` 的 remote 一致；计划目标仓库是 `DoveLi-Gu/dsh-dyou-wine`。本轮只准备源码、安装包、公告与工作流，尚未创建该远程仓库、推送或发布。既有 npm 包 `dsh-showcase` 的公开维护者为 `doveli`，实际发布时仍需核对当前 npm 登录身份。
+当前候选为 `0.1.0-alpha.12`，正式名「D友の酒 · Dyou Wine」。本版补充市场元数据、截图清单、投稿草案及自检，生产运行时沿用 Alpha.11；保留已有 Alpha.10／Alpha.11 本地 tag，不移动它们。此前已通过 GitHub 连接核对账号 `DoveLi-Gu`，与既有 `dsh-showcase` 的 remote 一致；计划目标仓库是 `DoveLi-Gu/dsh-dyou-wine`。本轮只准备源码、安装包、公告与市场资料，尚未创建该远程仓库、推送或发布。既有 npm 包 `dsh-showcase` 的公开维护者为 `doveli`，实际发布时仍需核对当前 npm 登录身份。
 
 ## 上传 GitHub
 
 1. 审阅源码、MIT 许可与 `.gitignore`，确认不提交 `node_modules`、`lib`、`.qa`、DSH profile、临时下载、测试报告、日志、`.env` 或凭据。Alpha.9 的指定 MP3 是有意内置素材，应与 [素材说明](ASSETS.md) 一并审阅；音乐权利不由代码 MIT 许可覆盖。源仓库提交 `package-lock.json`，CI 通过 `npm ci` 重现依赖。
 2. `package.json` 已按经核对账号填写计划仓库的 `repository`、`homepage`、`bugs`；创建远程仓库时使用相同归属与名称。推荐公开源码，以便建立包的 provenance。若改用其他仓库，先同步这三个字段及工作流身份断言。
 3. 配置真实 remote，再提交并推送。CI 会在 Ubuntu／Windows 的 Node 24 执行检查并上传 tarball；未运行的 workflow 不能当作测试结果。
-4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.11` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
+4. 给仓库设置 `dsh-plugin`、`deepseek-harness`、`desktop-pet`、`animation` topics，便于发现。确认测试记录及兼容矩阵后，提交并创建 `v0.1.0-alpha.12` tag，指向已审查提交。GitHub Release 使用 [本版公告](RELEASE-NOTES.md) 与经过检查的 tarball。
+
+市场设置还可使用源码中的 `marketplace/github-topics.json`；它是待执行的 GitHub API 请求体，不会被 GitHub 自动读取。公开后按 [市场准备](MARKETPLACE.md) 核查自动扫描和独立投稿，保留每个平台的实际收录状态。预发布保持 `alpha`，不为市场检索把未经稳定验收的版本设成 latest。`screenshots.json` 与 PNG／GIF 展示图只放入源码，不进入 npm 包。
 
 不建议直接分发未构建的源码压缩包。优先将经过检查的 `.tgz` 作为 GitHub Release 附件；如直接安装 GitHub spec，使用固定 tag／提交并按 README 处理 pnpm `allowBuilds`。
 
@@ -18,7 +20,7 @@ npm ci
 npx playwright install chromium
 npm run check
 npm pack --ignore-scripts
-npm publish ./dsh-dyou-wine-0.1.0-alpha.11.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
+npm publish ./dsh-dyou-wine-0.1.0-alpha.12.tgz --dry-run --access public --tag alpha --ignore-scripts --registry=https://registry.npmjs.org
 ```
 
 `pack:check` 使用 `npm pack --dry-run --ignore-scripts --json` 检查包内容白名单、入口、bundle 补丁和客户端声明。它不上传文件。`files` 仅包含编译产物、patch、许可证、README／变更记录与必要运行说明；测试夹具、原策划案和开发配置不进入 npm 包。

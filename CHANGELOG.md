@@ -1,5 +1,15 @@
 # 更新记录
 
+## 0.1.0-alpha.12 — 2026-10-18
+
+补充各插件市场的发现与投稿准备，生产运行时代码沿用 Alpha.11。
+
+- 保留 `dsh-plugin` npm 关键词，补充相关检索词及 Web profile／重启／安装步骤的社区市场声明；不扩大 `engines.dsh` 或将 Alpha 改为 latest。
+- 新增根目录 `screenshots.json` 与真实运行／控制面板 PNG，使支持该约定的市场优先采集实际效果。
+- 准备 GitHub topics 请求体、Awesome／ydhrdh／dsh.pub 的独立投稿草案及表单文案，核对自动目录、同源客户端、审核目录及官方新版索引的区别。
+- 新增市场资料自检并接入 `npm run check`；如实报告 dsh.pub 的构建入口缺失与 1 MB 限制。该市场尚未适配通过，未提交任何外部收录申请。
+- 本版编译、自动化与打包结果见 `docs/TESTING.md`。保留既有演示、宣传和第三方素材声明。
+
 ## 0.1.0-alpha.11 — 2026-10-18
 
 补充 GitHub 展示材料，运行时沿用 Alpha.10。

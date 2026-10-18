@@ -2,7 +2,7 @@
 
 DeepSeek Harness（DSH）Web 娱乐插件：让界面按固定节奏 Q 弹，让蓝白鲸鱼娘毛绒玩偶满屏飞、碰墙反弹。两项效果独立开关，可同时运行；默认静止，点击「开喝」才启动。
 
-正式名：**D友の酒**；英文名：**Dyou Wine**；npm 包名与仓库名：`dsh-dyou-wine`。当前候选版本：`0.1.0-alpha.11`。计划仓库为 `DoveLi-Gu/dsh-dyou-wine`，维护者沿用 dsh-showcase；**尚未创建该远程仓库或发布至 npm**。检验结果见 [测试记录](docs/TESTING.md)。
+正式名：**D友の酒**；英文名：**Dyou Wine**；npm 包名与仓库名：`dsh-dyou-wine`。当前候选版本：`0.1.0-alpha.12`。计划仓库为 `DoveLi-Gu/dsh-dyou-wine`，维护者沿用 dsh-showcase；**尚未创建该远程仓库或发布至 npm**。检验结果见 [测试记录](docs/TESTING.md)。
 
 ## 效果演示
 
@@ -11,6 +11,12 @@ DeepSeek Harness（DSH）Web 娱乐插件：让界面按固定节奏 Q 弹，让
 真实 DSH Web 录屏：界面与飞行玩偶同时开启，使用「上头」档、固定 120 BPM；玩偶在可视区匀速飞行，碰墙反弹。GIF 为 12 秒、800 × 500、15 fps 的无声循环片段，未加速。画面使用隔离测试会话，没有私人聊天或真实模型请求。完整素材位于源码的 `docs/assets/demo.gif`；图片在仓库上传后显示，npm README 也使用相同的 GitHub 图片地址。
 
 Alpha.9 将原梗 BGM 改为内置音频，移除左下角视频。设置沿用 320 px 简洁面板：两个效果开关、微醺／上头／整活三档、原梗 BGM，以及开喝／暂停／醒酒；面板保留可跳转的音频来源链接。固定节奏为 120 BPM；启动控制器时保留预设和三个开关，将已移除的高级参数恢复默认，避免旧范围关闭或强度为零导致看不到动效。界面和玩偶共用固定时钟，碰墙或切换其中一项不会让另一项重新起拍。
+
+## 插件市场收录准备
+
+已保留 npm 的 `dsh-plugin` 关键词、`dsh.bundle`、经过验证的 `engines.dsh`、图标与中英文名称说明，并补充 Web profile／重启／安装步骤的社区市场声明。根目录 `screenshots.json` 指向真实演示画面，供支持它的市场读取。
+
+GitHub 仓库公开后还需设置 **`dsh-plugin` Topic**；本地关键词不能代替远程仓库主题。查到的各市场发现规则、独立投稿草案、Alpha 限制与尚未满足的准入条件见 [市场收录准备](docs/MARKETPLACE.md) 和 [投稿资料](https://github.com/DoveLi-Gu/dsh-dyou-wine/tree/main/marketplace)。元数据齐全不代表已被所有市场审核收录；当前没有执行任何市场提交。
 
 ## 使用条件
 
@@ -27,13 +33,13 @@ npm run check
 npm pack --ignore-scripts
 ```
 
-生成 `dsh-dyou-wine-0.1.0-alpha.11.tgz`。推荐先在独立 DSH home 和 Web profile 试用，以下为 PowerShell 示例：
+生成 `dsh-dyou-wine-0.1.0-alpha.12.tgz`。推荐先在独立 DSH home 和 Web profile 试用，以下为 PowerShell 示例：
 
 ```powershell
 $env:DSH_HOME = Join-Path $PWD '.qa/dsh-home'
 dsh --version
 dsh --profile dyou-wine-test --from-default-profile web --dump-config
-$wineTarball = Join-Path $PWD 'dsh-dyou-wine-0.1.0-alpha.11.tgz'
+$wineTarball = Join-Path $PWD 'dsh-dyou-wine-0.1.0-alpha.12.tgz'
 dsh plugin --profile dyou-wine-test add $wineTarball --ignore-scripts
 dsh --profile dyou-wine-test --dump-config
 dsh --profile dyou-wine-test --no-open --host 127.0.0.1 --port 0
@@ -86,7 +92,7 @@ BGM 默认关闭，启用后以固定 50% 音量循环；暂停和后台暂停�
 下列 npm 命令须等该版本实际发布后才能使用：
 
 ```sh
-dsh plugin --profile dyou-wine-test add dsh-dyou-wine@0.1.0-alpha.11
+dsh plugin --profile dyou-wine-test add dsh-dyou-wine@0.1.0-alpha.12
 ```
 
 优先分发经过检查的 tarball。计划仓库地址是 `https://github.com/DoveLi-Gu/dsh-dyou-wine`，这里记录发布目标，不表示远程仓库已创建。源码路径为：克隆已发布仓库 → `npm ci` → 完整检查 → `npm pack --ignore-scripts` → 本地安装。直接安装 GitHub spec 时应固定审查过的 tag／提交；DSH 使用 pnpm，源码包的 `prepare` 需要开发依赖和构建脚本，pnpm 10/11 可能拦截构建。仅在审核来源后，在目标 profile 的 `pnpm-workspace.yaml` 中保留原设置并允许确切包：
@@ -111,9 +117,9 @@ npm run test:browser
 npm run pack:check
 ```
 
-`npm run check` 依次执行类型检查、单元测试、构建、浏览器测试与包白名单检查。Linux 首次可用 `npx playwright install --with-deps chromium`。开发模拟页为 `http://127.0.0.1:4179/tests/fixture/`，不是实际 DSH。真实隔离宿主检查使用 `node scripts/dsh-smoke.mjs --tarball ./dsh-dyou-wine-0.1.0-alpha.11.tgz`，CLI 自动发现本地或全局安装，特殊布局可加 `--dsh-bin /absolute/path/to/dsh/lib/bin.js`；60 秒对照单独运行 `npm run benchmark`，证据及边界见 [测试记录](docs/TESTING.md)。
+`npm run check` 依次执行类型检查、单元测试、构建、浏览器测试与包白名单检查。Linux 首次可用 `npx playwright install --with-deps chromium`。开发模拟页为 `http://127.0.0.1:4179/tests/fixture/`，不是实际 DSH。真实隔离宿主检查使用 `node scripts/dsh-smoke.mjs --tarball ./dsh-dyou-wine-0.1.0-alpha.12.tgz`，CLI 自动发现本地或全局安装，特殊布局可加 `--dsh-bin /absolute/path/to/dsh/lib/bin.js`；60 秒对照单独运行 `npm run benchmark`，证据及边界见 [测试记录](docs/TESTING.md)。
 
-复现演示需要已安装上述 DSH、Playwright Chromium，以及 PATH 中的 FFmpeg：先构建并打包，再执行 `npm run demo:record -- ./dsh-dyou-wine-0.1.0-alpha.11.tgz`。脚本创建新的隔离 DSH home，安装指定 tarball 和测试会话，记录原速双效果及两个方向的反弹，导出 `docs/assets/demo.gif`；原录屏与采样报告留在忽略提交的 `.qa/demo/`。演示 GIF 和赞助 Logo 仅放入 GitHub 源码，npm 安装包不携带这两张展示图片。
+复现演示需要已安装上述 DSH、Playwright Chromium，以及 PATH 中的 FFmpeg：先构建并打包，再执行 `npm run demo:record -- ./dsh-dyou-wine-0.1.0-alpha.12.tgz`。脚本创建新的隔离 DSH home，安装指定 tarball 和测试会话，记录原速双效果及两个方向的反弹，导出 `docs/assets/demo.gif`；原录屏与采样报告留在忽略提交的 `.qa/demo/`。演示 GIF 和赞助 Logo 仅放入 GitHub 源码，npm 安装包不携带这两张展示图片。
 
 客户端由宿主 ModuleLoader 加载，使用宿主 React，并以独立 id 注册 `shell.overlay`。版本适配器集中维护 DOM 识别规则，不依赖构建后 CSS 哈希。CI 已准备 Ubuntu／Windows Node 24 工作流，但没有实际运行的 CI 不能计作已通过。此次开发不自动执行 GitHub 推送、建库或 npm 发布。
 

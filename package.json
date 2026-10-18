@@ -1,6 +1,6 @@
 {
   "name": "dsh-dyou-wine",
-  "version": "0.1.0-alpha.11",
+  "version": "0.1.0-alpha.12",
   "description": "D友の酒 · Dyou Wine: fixed-rhythm page bounce, a flying whale-girl pet and bundled BGM for DeepSeek Harness.",
   "type": "module",
   "license": "MIT",
@@ -38,7 +38,8 @@
     "docs/MOTION-REFERENCE.md",
     "docs/TESTING.md",
     "docs/RELEASING.md",
-    "docs/RELEASE-NOTES.md"
+    "docs/RELEASE-NOTES.md",
+    "docs/MARKETPLACE.md"
   ],
   "engines": {
     "node": "^22.19.0 || >=24.0.0",
@@ -55,6 +56,13 @@
         "@deepseek-ai/dsh-client-ui-layout",
         "@deepseek-ai/dsh-client-locale"
       ]
+    },
+    "marketplace": {
+      "profiles": [
+        "web"
+      ],
+      "requiresRestart": true,
+      "manualSteps": false
     }
   },
   "publishConfig": {
@@ -69,7 +77,12 @@
     "desktop-pet",
     "whale-girl",
     "music",
-    "animation"
+    "animation",
+    "dsh",
+    "cordis",
+    "deepseek",
+    "ui-enhancement",
+    "entertainment"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
@@ -79,11 +92,12 @@
     "test:dsh": "node scripts/dsh-smoke.mjs",
     "benchmark": "node scripts/benchmark.mjs",
     "dev": "vite --host 127.0.0.1",
-    "check": "npm run typecheck && npm test && npm run build && npm run test:browser && npm run pack:check",
+    "check": "npm run typecheck && npm test && npm run build && npm run test:browser && npm run marketplace:check && npm run pack:check",
     "pack:check": "node scripts/check-package.mjs",
     "prepare": "npm run build",
     "prepublishOnly": "npm run check",
-    "demo:record": "node scripts/record-demo.mjs"
+    "demo:record": "node scripts/record-demo.mjs",
+    "marketplace:check": "node scripts/check-marketplace.mjs"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",

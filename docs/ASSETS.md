@@ -34,6 +34,8 @@
 
 ## 其他参考与测试素材
 
+- `docs/assets/screenshot-running.png` 与 `screenshot-controls.png` 为 Alpha.11 隔离 DSH Web 录制过程的原始截图，1280 × 800；仅包含上文确定性测试会话和插件界面，不含私人对话。Alpha.12 的根目录 `screenshots.json` 将这两张 PNG 和原演示 GIF 明确列为市场图片，避免自动采集 README 的赞助 Logo。PNG 同样只进入 GitHub 源码，不进入 npm 安装包。
+
 - `docs/assets/demo.gif` 是本项目在隔离 DSH Web profile 中录制的实际运行画面：固定测试会话、界面律动与飞行玩偶同时开启、上头档、120 BPM。通过 `scripts/record-demo.mjs` 录制后使用 FFmpeg 原速裁去准备过程并转为 12 秒、800 × 500、15 fps 无声循环 GIF；未替换宿主组件、未请求模型、未使用私人聊天。画面中的角色沿用上文说明，不因此扩展第三方权利。该 GIF 仅供 GitHub 展示，不进入 npm 安装包。
 
 - [参考动效](MOTION-REFERENCE.md) 仅在本地观察分析；包内不包含参考视频画面、角色原图或其他参考录音。上述用户明确指定的 BGM 是 Alpha.9 新增的独立素材记录。
