@@ -4,6 +4,9 @@ DeepSeek Harness（DSH）Web 娱乐插件：让界面按固定节奏 Q 弹，让
 
 正式名：**D友の酒**；英文名：**Dyou Wine**；npm 包名与仓库名：`dsh-dyou-wine`。当前版本：`0.1.0-alpha.13`，已在 [GitHub](https://github.com/DoveLi-Gu/dsh-dyou-wine) 和 [npm](https://www.npmjs.com/package/dsh-dyou-wine/v/0.1.0-alpha.13) 公开；维护者沿用 dsh-showcase。请固定版本安装，检验结果见 [测试记录](docs/TESTING.md)。
 
+> **支持作者 · [鸽子中转站](https://api.doveli.top/)**<br>
+> OpenAI 兼容 API，方便接入常用 AI 编程工具。[查看接入文档](https://www.doveli.top/docs/)
+
 ## 效果演示
 
 ![真实 DSH 界面与大肥鱼娘一起固定节奏 Q 弹，玩偶满屏飞行并碰墙反弹](https://raw.githubusercontent.com/DoveLi-Gu/dsh-dyou-wine/main/docs/assets/demo.gif)
