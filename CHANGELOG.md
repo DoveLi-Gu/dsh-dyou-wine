@@ -14,6 +14,7 @@
 - 完成两个 PR、三个 Issue 和两个网页表单投稿：dsh.pub PR #144 已合并并在线收录（社区投稿）；ydhrdh PR #17、DSHPlugin.io Issue #36、dsh-plugin.org Issue #281、dsh.market Issue #255 及 DSH Marketplace／dshx 表单待审核、检测或运营处理。其余入口与准入条件见 `docs/MARKETPLACE.md`。
 - 跟进 DSH Plugin Hub：登录已恢复，预检服务仍暂不可用；官网维护者反馈已收到，正式候选待提交。该反馈不计入上述七项市场投稿。
 - 在 README 简介后、演示前增加紧凑的鸽子中转站支持入口，保留底部完整介绍，方便首次访问仓库的读者发现。
+- 重写 GitHub 首页文案：用大肥鱼娘、开喝与醒酒串起玩法，前置安装和操作，将开发与发布细节收进折叠区；保留兼容范围、音频署名、素材说明和顶部支持入口。
 
 ## 0.1.0-alpha.12 — 2026-10-18
 
