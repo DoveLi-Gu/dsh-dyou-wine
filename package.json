@@ -1,6 +1,6 @@
 {
   "name": "dsh-dyou-wine",
-  "version": "0.1.0-alpha.10",
+  "version": "0.1.0-alpha.11",
   "description": "D友の酒 · Dyou Wine: fixed-rhythm page bounce, a flying whale-girl pet and bundled BGM for DeepSeek Harness.",
   "type": "module",
   "license": "MIT",
@@ -82,7 +82,8 @@
     "check": "npm run typecheck && npm test && npm run build && npm run test:browser && npm run pack:check",
     "pack:check": "node scripts/check-package.mjs",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run check"
+    "prepublishOnly": "npm run check",
+    "demo:record": "node scripts/record-demo.mjs"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.4",
