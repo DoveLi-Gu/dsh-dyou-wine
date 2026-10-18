@@ -32,4 +32,4 @@ dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13 --ignore-scripts
 - ydhrdh 市场：<https://github.com/ydhrdh/dsh-marketplace/blob/main/CONTRIBUTING.md>，使用同目录 JSON 草案。
 - dsh.pub：<https://dsh.pub/en/submit/>，最终提交后核对 Git 树并公开仓库，再使用同目录 submission JSON 草案；当前未提交。
 
-不要为通过收录填写 `verified:true`、虚构 Star 数、扩大兼容范围，或将 Alpha 冒充稳定版。当前记录的是本地验证范围；CI 未实际运行，第三方审核尚未执行。
+不要为通过收录填写 `verified:true`、虚构 Star 数、扩大兼容范围，或将 Alpha 冒充稳定版。当前验证范围见 TESTING.md；GitHub CI 以目标提交的实际结果为准，第三方审核尚未执行。

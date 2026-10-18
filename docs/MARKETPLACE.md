@@ -2,7 +2,7 @@
 
 核查日期：2026-10-18。候选版本：`0.1.0-alpha.13`；仓库：`DoveLi-Gu/dsh-dyou-wine`；npm：`dsh-dyou-wine`。
 
-当前完成的是发布元数据、展示材料和投稿草稿。GitHub 仓库与 npm 包尚未公开，以下入口一律为 **pending（待发布、待扫描或待审核）**，没有提交外部 PR、表单或候选，也不代表已经被任何市场收录。本表覆盖本次找到并核对的入口，不声称穷尽全网。
+GitHub 仓库、`v0.1.0-alpha.13` tag 和发行附件已公开，远程已设置 `marketplace/github-topics.json` 中的 9 个 topics；npm 尚未发布。以下市场入口仍为 **pending（待扫描或待审核）**，没有提交外部 PR、表单或候选，也不代表已经被任何市场收录。本表覆盖本次找到并核对的入口，不声称穷尽全网。
 
 ## 三种信息分别负责什么
 
@@ -25,13 +25,19 @@
 | YELEBAI／`dsh-plugin-marketplace` | 定时扫描 `topic:dsh-plugin archived:false`，验证后写入中心 Registry；topic 本身不等于收录。 | Alpha.13 发布源纳入真实 `lib` 产物及素材，公开后等待扫描，优先给出精确 npm 包／版本；Git 来源仍有 `prepare`，须遵循脚本审批规则，不宣称免审一键安装。[Registry 规则](https://github.com/YELEBAI/dsh-plugin-marketplace#registry-如何工作) |
 | w2112515／`dsh-plugin-marketplace` | 每日 topic 扫描并静态验证；`dsh-category-ui` 可显式归类；一键安装要求固定 commit 内存在加载产物。 | Alpha.13 将真实 `lib` 产物和资源纳入 Git 发布源；公开后核对固定 commit、设置 topic 并等待扫描。Git 来源仍有 `prepare`，不把产物存在等同于已获构建审批或满足其全部一键安装条件。[作者规则](https://github.com/w2112515/dsh-plugin-marketplace#for-plugin-authors) |
 | ydhrdh／`dsh-marketplace` | 独立 PR，新增 `registry/plugins/<id>/plugin.json`，由维护者授予 verified 状态。 | 草稿使用固定 Git tag，`verified: false`；该市场额外 validator 的 npm spec 检查只接受纯包名，不把带 alpha 版本的 spec 塞入错误字段。[贡献指南](https://github.com/ydhrdh/dsh-marketplace/blob/main/CONTRIBUTING.md)、[校验器](https://github.com/ydhrdh/dsh-marketplace/blob/main/scripts/validate-registry.mjs) |
-| `dsh.pub` | 独立 GitHub PR 提交公开仓库，静态验证 bundle 与已提交入口；topic 发现同样需通过其检查。 | Alpha.13 已拆分媒体，真实 client 入口低于 1 MB，本地候选通过上游两条契约检查；最终提交后仍须核对 Git 树，公开后等待远程检查和收录。投稿草案仍为 pending。[提交页](https://dsh.pub/en/submit/)、[校验源码](https://github.com/dsh-pub/dsh-pub/blob/d93c8bf289c5fb045ccad77ea4610cce0d895b97/scripts/lib/plugin-submission.mjs) |
+| `dsh.pub` | 独立 GitHub PR 提交公开仓库，静态验证 bundle 与已提交入口；topic 发现同样需通过其检查。 | Alpha.13 已拆分媒体，真实 client 入口低于 1 MB，最终 Git commit 已通过上游两条契约检查的本地复核；仓库已公开，等待远程检查和收录。投稿草案仍为 pending。[提交页](https://dsh.pub/en/submit/)、[校验源码](https://github.com/dsh-pub/dsh-pub/blob/d93c8bf289c5fb045ccad77ea4610cce0d895b97/scripts/lib/plugin-submission.mjs) |
 | `dshplugin.online` | 自站说明为 GitHub 仓库加 `dsh-plugin` topic 后进入目录。 | 公开后设置 topic，等待并核查搜索；不保证该站的扫描时效。[第一方说明](https://dshplugin.online/) |
 | Fufan Studio Plugin Center | npm `keywords:dsh-plugin` 搜索，读取确切 npm 版本的 bundle；精确包名查询默认取 latest。 | 保留关键词和明确 alpha 版本安装说明；不保证仅 alpha 包会进入普通搜索，不为了曝光改用 latest。[目录源码](https://github.com/fufankeji/deepseek-harness-studio/blob/main/apps/desktop/src/plugin-center/npm-ecosystem-catalog.ts) |
 | `dsh.deepseek404.com` | 自站页脚声明从 GitHub 公开项目自动聚合、未经人工审核，并链接 GitHub topic。 | 公开后等待扫描；没有把自动聚合表述为审核通过。[第一方入口](https://dsh.deepseek404.com/) |
+| bradeGithub／`DSH-Plugins-Marketplace` | `dsh-plugin` topic 扫描，再按 `dsh` 对象或宿主依赖等能力信号识别插件。 | 当前 `dsh.bundle` 与真实入口已满足识别形态，无需另加 `dsh.plugin`／`dsh.kind`。[作者标准](https://github.com/bradeGithub/DSH-Plugins-Marketplace/blob/main/STANDARD.md)、[实际识别器](https://github.com/bradeGithub/DSH-Plugins-Marketplace/blob/main/lib/domain/validation.js) |
+| `dsh.market`／`2BingLing/dsh-market` | 扫描 `dsh-plugin`、`dsh` 等 topics，随后检测 `cordis.patch.yml` 等真实插件标记；另支持 Issue 投稿。 | topic、根 patch、包声明均已具备，等待扫描；无需新增包字段。[第一方规则](https://github.com/2BingLing/dsh-market#收录机制) |
+| `dsh-plugin.org` | 扫描公开仓库的 `dsh-plugin` topic，读取根 `package.json`、README 安装命令和 `apply(ctx)`；源码目录与 npm 插件中心有不同要求。 | 已提供所需声明和入口；npm 尚未发布，因此不能承诺出现在其 npm 插件中心。站内 `dshTarget` 不作为未经证实的作者 package 字段添加。[收录要求](https://dsh-plugin.org/zh/submit) |
+| Britneycode／`dsh-update-center` | topic 搜索、npm 关键词及 repository 映射；扫描窗口有限。 | 现有字段已覆盖；新仓可能尚未进入其有限候选窗口，不能用多填字段保证立即收录。[第一方说明](https://github.com/Britneycode/dsh-update-center#插件市场) |
 | DSH Plugin Hub／`dshpluginhub.dev` | npm 包／GitHub 仓库／安装命令可公开预检；GitHub 登录后才能交候选，审核前不进入市场搜索或排行榜。 | 公开后预检并提交候选；本轮只阅读规则，未登录提交，也未做站点端到端验证。[候选入口](https://dshpluginhub.dev/zh/submit) |
 
-`dsh.market`、`dshx.io`、`deepseekdsh.com` 等相关入口还需逐个确认其真实数据源与当前投稿规则；本轮不编造提交地址，也不把入口存在记作收录完成。本机直接访问其中部分入口发生 TLS 或读取超时，不能据此断定它们永久失效。
+`dshx.io`、`deepseekdsh.com` 等相关入口还需逐个确认其真实数据源与当前投稿规则；本轮不编造提交地址，也不把入口存在记作收录完成。本机此前访问其中部分入口发生 TLS 或读取超时，不能据此断定它们永久失效。
+
+2026-10-18 再次核查，未发现本插件遗漏的自动发现必填字段。两个额外可选声明不作为入场条件添加：brade 标准的顶层 `disclosure` 用于数据行为说明，但其当前构建器的披露徽章来自聚合目录，没有直接读取每个候选包；YELEBAI 的 `dsh-plugin.json` 仅用于 Community/TUI v0.15 预检，本插件未声明该载体兼容。[brade 构建器](https://github.com/bradeGithub/DSH-Plugins-Marketplace/blob/main/scripts/build-registry.mjs)、[YELEBAI 校验器](https://github.com/YELEBAI/dsh-plugin-marketplace/blob/main/scripts/registry-core.mjs)
 
 `DshMarketPlace/awesome-dsh-plugin` 的贡献指南还列出 topic 目录准入的提交数要求，和另一组织 Awesome 的“仓库满一天”规则不同；不能为满足条件制造无意义提交。[独立贡献规则](https://github.com/DshMarketPlace/awesome-dsh-plugin/blob/main/CONTRIBUTING.md)
 
@@ -45,11 +51,11 @@ Alpha.12 曾有两个阻碍：`lib` 未提交到 Git，且内嵌 PNG／MP3 的 `
 
 上游固定版本为 `d93c8bf289c5fb045ccad77ea4610cce0d895b97`。其 **1,000,000 bytes（含上限）** 限制作用于读取的 manifest、patch、host／client、README 和 LICENSE 等单文件，不是 npm 包总大小限制；它没有递归读取上述媒体或分析 JS 依赖、注入依赖和资源 URL。媒体拆分是正常分发方式，功能完整性仍需由本项目的包检查和真实宿主测试验证。[投稿验证](https://github.com/dsh-pub/dsh-pub/blob/d93c8bf289c5fb045ccad77ea4610cce0d895b97/scripts/lib/plugin-submission.mjs)、[topic 扫描](https://github.com/dsh-pub/dsh-pub/blob/d93c8bf289c5fb045ccad77ea4610cce0d895b97/scripts/lib/topic-catalog-sync.mjs)
 
-本地候选已通过固定上游源码的投稿检查和 Topic 检查，报告保存在忽略目录 `.qa/release-alpha13/dshpub-worktree-admission.json`；该报告明确标记工作树候选，不能当作 GitHub 默认分支验证。最终提交后须再从实际 Git blob 重跑，随后公开仓库并等待市场自己的扫描／审核。当前 **发布、投稿、收录仍全部 pending**，本地静态通过不代表远程准入、运行兼容、安全审计或维护者背书。
+最终 Alpha.13 commit `61b2df26e02125023b6fa793adf18c707a47c15d` 已从实际 Git blob 通过固定上游源码的投稿检查和 Topic 检查，报告保存在忽略目录 `.qa/release-alpha13/dshpub-git-admission.json`。该 commit 已随 tag 公开；仍需等待市场自己的扫描／审核。当前 **npm 发布、市场投稿与收录仍 pending**，本地静态通过不代表远程准入、运行兼容、安全审计或维护者背书。
 
 ## 发布元数据与展示
 
-远程公开仓库创建后，再由有权限的维护者执行以下设置；这不是本轮已经执行的操作：
+远程仓库已通过 GitHub API 设置 9 个 topics；以下命令用于后续维护，至少保留三个发现／分类主题：
 
 ```sh
 gh repo edit DoveLi-Gu/dsh-dyou-wine --add-topic dsh-plugin --add-topic deepseek-harness --add-topic dsh-category-ui --add-topic desktop-pet --add-topic animation
@@ -63,8 +69,8 @@ npm 包的 `repository` 必须指回真实公开仓库，Awesome 才能自动关
 
 ## 公开后的执行顺序
 
-1. 先通过构建、测试与包检查，核对版本、哈希、许可和素材声明，公开真实 GitHub 仓库、相应 tag、Release tarball 与 npm alpha 版本；这些操作尚待执行。
-2. 设置 GitHub topics，核对 npm 关键词及 repository。分别记录每个自动发现入口的扫描结果，不能用一个目录的结果替另一个验收。
+1. GitHub 仓库、Alpha.13 tag 与 Release tarball 已公开；构建和本地检查见测试记录。npm alpha 发布仍待执行。
+2. GitHub topics 已设置，npm 关键词及 repository 已核对。后续分别记录每个自动发现入口的扫描结果，不能用一个目录的结果替另一个验收。
 3. 仓库满 1 天后向 Awesome 提单条 YAML PR；DshMarketPlace 精选、ydhrdh、dsh.pub 是各自独立的 PR，不与其混同。`marketplace/` 保存本地投稿草稿，提交前再按上游当日 schema 核对。
 4. 对自动目录的遗漏，使用各自确认存在的表单／issue／候选入口；需审核的条目持续记为 pending，保留 PR／候选链接，审核通过后再记录实际目录 URL。
 5. 官方 Discover 需先确定用户采用哪个索引，再按该索引的运营规则提交；不擅自给用户的 DSH 安装市场或添加远程索引。

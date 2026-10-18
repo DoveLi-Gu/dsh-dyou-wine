@@ -2,13 +2,13 @@
 
 DeepSeek Harness（DSH）Web 娱乐插件：让界面按固定节奏 Q 弹，让蓝白鲸鱼娘毛绒玩偶满屏飞、碰墙反弹。两项效果独立开关，可同时运行；默认静止，点击「开喝」才启动。
 
-正式名：**D友の酒**；英文名：**Dyou Wine**；npm 包名与仓库名：`dsh-dyou-wine`。当前候选版本：`0.1.0-alpha.13`。计划仓库为 `DoveLi-Gu/dsh-dyou-wine`，维护者沿用 dsh-showcase；**尚未创建该远程仓库或发布至 npm**。检验结果见 [测试记录](docs/TESTING.md)。
+正式名：**D友の酒**；英文名：**Dyou Wine**；npm 包名与仓库名：`dsh-dyou-wine`。当前版本：`0.1.0-alpha.13`，已在 [GitHub](https://github.com/DoveLi-Gu/dsh-dyou-wine) 公开；维护者沿用 dsh-showcase。**npm 尚未发布**，请使用 GitHub 发行附件或按下文从源码构建。检验结果见 [测试记录](docs/TESTING.md)。
 
 ## 效果演示
 
 ![真实 DSH 界面与大肥鱼娘一起固定节奏 Q 弹，玩偶满屏飞行并碰墙反弹](https://raw.githubusercontent.com/DoveLi-Gu/dsh-dyou-wine/main/docs/assets/demo.gif)
 
-真实 DSH Web 录屏：界面与飞行玩偶同时开启，使用「上头」档、固定 120 BPM；玩偶在可视区匀速飞行，碰墙反弹。GIF 为 12 秒、800 × 500、15 fps 的无声循环片段，未加速。画面使用隔离测试会话，没有私人聊天或真实模型请求。完整素材位于源码的 `docs/assets/demo.gif`；图片在仓库上传后显示，npm README 也使用相同的 GitHub 图片地址。
+真实 DSH Web 录屏：界面与飞行玩偶同时开启，使用「上头」档、固定 120 BPM；玩偶在可视区匀速飞行，碰墙反弹。GIF 为 12 秒、800 × 500、15 fps 的无声循环片段，未加速。画面使用隔离测试会话，没有私人聊天或真实模型请求。完整素材位于源码的 `docs/assets/demo.gif`；npm README 也使用相同的 GitHub 图片地址。
 
 Alpha.9 将原梗 BGM 改为内置音频，移除左下角视频。设置沿用 320 px 简洁面板：两个效果开关、微醺／上头／整活三档、原梗 BGM，以及开喝／暂停／醒酒；面板保留可跳转的音频来源链接。固定节奏为 120 BPM；启动控制器时保留预设和三个开关，将已移除的高级参数恢复默认，避免旧范围关闭或强度为零导致看不到动效。界面和玩偶共用固定时钟，碰墙或切换其中一项不会让另一项重新起拍。
 
@@ -16,7 +16,7 @@ Alpha.9 将原梗 BGM 改为内置音频，移除左下角视频。设置沿用 
 
 已保留 npm 的 `dsh-plugin` 关键词、`dsh.bundle`、经过验证的 `engines.dsh`、图标与中英文名称说明，并补充 Web profile／重启／安装步骤的社区市场声明。根目录 `screenshots.json` 指向真实演示画面，供支持它的市场读取。
 
-GitHub 仓库公开后还需设置 **`dsh-plugin` Topic**；本地关键词不能代替远程仓库主题。查到的各市场发现规则、独立投稿草案、Alpha 限制与尚未满足的准入条件见 [市场收录准备](docs/MARKETPLACE.md) 和 [投稿资料](https://github.com/DoveLi-Gu/dsh-dyou-wine/tree/main/marketplace)。元数据齐全不代表已被所有市场审核收录；当前没有执行任何市场提交。
+远程仓库已设置 **`dsh-plugin` Topic** 及其余 8 个相关主题；本地关键词不能代替远程仓库主题。再次核查自动扫描器后，未发现当前插件必须补充的识别字段。各市场发现规则、独立投稿草案、Alpha 限制与准入条件见 [市场收录准备](docs/MARKETPLACE.md) 和 [投稿资料](https://github.com/DoveLi-Gu/dsh-dyou-wine/tree/main/marketplace)。元数据齐全不代表已被所有市场审核收录；当前没有执行任何市场提交。
 
 ## 使用条件
 
@@ -24,7 +24,17 @@ GitHub 仓库公开后还需设置 **`dsh-plugin` Topic**；本地关键词不�
 - Node.js `^22.19.0 || >=24.0.0`；开发和 CI 使用 Node.js 24。
 - 这是 Alpha，Desktop、TUI、移动端和其他 DSH 版本未承诺兼容。实际通过情况见 [兼容矩阵](docs/COMPATIBILITY.md)。
 
-## 安装本地 tarball
+## 安装 GitHub 发行包
+
+从 [Alpha.13 Release](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases/tag/v0.1.0-alpha.13) 下载 `dsh-dyou-wine-0.1.0-alpha.13.tgz`，然后执行：
+
+```sh
+dsh plugin --profile web add ./dsh-dyou-wine-0.1.0-alpha.13.tgz --ignore-scripts
+```
+
+重启 Host 并刷新页面。该附件含已编译入口和媒体；Alpha 兼容范围及音频来源见下文。
+
+## 从源码构建本地 tarball
 
 ```sh
 npm ci
@@ -74,7 +84,7 @@ dsh plugin --profile dyou-wine-test remove dsh-dyou-wine
 
 BGM 默认关闭，启用后以固定 50% 音量循环；暂停和后台暂停保留进度，醒酒／Escape 回到开头，卸载释放资源。有声播放仍受浏览器策略约束。界面和玩偶沿用本地固定 120 BPM 时钟，播放音频不重置动画，不宣称与原曲每拍精确同步。
 
-歌曲录音、词曲和合成声库不适用本项目代码的 MIT 许可。来源署名用于标识原投稿，不表示已经取得原权利人的公开分发许可；此版本仅完成本地安装交付，未公开发布 GitHub/npm。
+歌曲录音、词曲和合成声库不适用本项目代码的 MIT 许可。来源署名用于标识原投稿，不表示已经取得原权利人的公开分发许可；GitHub 源码与发行附件包含该录音，素材来源和独立权利范围见 [素材说明](docs/ASSETS.md)。npm 尚未发布。
 
 插件不接入模型或工具调用链，不新增模型 Token 消耗，也不上传对话正文或文件。启停状态不跨刷新自动恢复。设置保存在当前站点的浏览器 `localStorage`（`dsh-dyou-wine.settings.v1`）；同一浏览器源下的 profile 共用该设置。`pageEnabled`／`petEnabled` 为独立布尔值，`musicEnabled` 默认 false。旧 `mode: 'pet'` 迁移为界面关／玩偶开，旧 `mode: 'page'` 迁移为界面开／玩偶关，明确布尔值优先；预设和三个开关保留，控制器将高级项恢复上述默认值。清除该条存储可恢复全部默认参数。
 
@@ -95,7 +105,7 @@ BGM 默认关闭，启用后以固定 50% 音量循环；暂停和后台暂停�
 dsh plugin --profile dyou-wine-test add dsh-dyou-wine@0.1.0-alpha.13
 ```
 
-优先分发经过检查的 tarball。计划仓库地址是 `https://github.com/DoveLi-Gu/dsh-dyou-wine`，这里记录发布目标，不表示远程仓库已创建。源码路径为：克隆已发布仓库 → `npm ci` → 完整检查 → `npm pack --ignore-scripts` → 本地安装。直接安装 GitHub spec 时应固定审查过的 tag／提交；DSH 使用 pnpm，源码包的 `prepare` 需要开发依赖和构建脚本，pnpm 10/11 可能拦截构建。仅在审核来源后，在目标 profile 的 `pnpm-workspace.yaml` 中保留原设置并允许确切包：
+优先使用经过检查的 [GitHub Release tarball](https://github.com/DoveLi-Gu/dsh-dyou-wine/releases/tag/v0.1.0-alpha.13)。源码路径为：克隆本仓库 → `npm ci` → 完整检查 → `npm pack --ignore-scripts` → 本地安装。直接安装 GitHub spec 时应固定审查过的 tag／提交；DSH 使用 pnpm，源码包的 `prepare` 需要开发依赖和构建脚本，pnpm 10/11 可能拦截构建。仅在审核来源后，在目标 profile 的 `pnpm-workspace.yaml` 中保留原设置并允许确切包：
 
 ```yaml
 allowBuilds:
@@ -121,7 +131,7 @@ npm run pack:check
 
 复现演示需要已安装上述 DSH、Playwright Chromium，以及 PATH 中的 FFmpeg：先构建并打包，再执行 `npm run demo:record -- ./dsh-dyou-wine-0.1.0-alpha.13.tgz`。脚本创建新的隔离 DSH home，安装指定 tarball 和测试会话，记录原速双效果及两个方向的反弹，导出 `docs/assets/demo.gif`；原录屏与采样报告留在忽略提交的 `.qa/demo/`。演示 GIF 和赞助 Logo 仅放入 GitHub 源码，npm 安装包不携带这两张展示图片。
 
-客户端由宿主 ModuleLoader 加载，使用宿主 React，并以独立 id 注册 `shell.overlay`。版本适配器集中维护 DOM 识别规则，不依赖构建后 CSS 哈希。CI 已准备 Ubuntu／Windows Node 24 工作流，但没有实际运行的 CI 不能计作已通过。此次开发不自动执行 GitHub 推送、建库或 npm 发布。
+客户端由宿主 ModuleLoader 加载，使用宿主 React，并以独立 id 注册 `shell.overlay`。版本适配器集中维护 DOM 识别规则，不依赖构建后 CSS 哈希。[GitHub Actions](https://github.com/DoveLi-Gu/dsh-dyou-wine/actions) 在 Ubuntu／Windows Node 24 运行检查，以相应提交的实际结果为准。npm 工作流仅手动触发，上传代码或 tag 不会自动发布 npm。
 
 需求和设计见 [PRODUCT.md](PRODUCT.md) 与 [DESIGN.md](DESIGN.md)。完整原策划案保存在源码仓库，不进入 npm 安装包。
 

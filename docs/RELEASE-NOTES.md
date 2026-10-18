@@ -18,6 +18,6 @@ dsh plugin --profile web add dsh-dyou-wine@0.1.0-alpha.13
 
 本地 tarball 安装可直接使用 `dsh plugin --profile web add ./dsh-dyou-wine-0.1.0-alpha.13.tgz --ignore-scripts`，更新后重启 Host 并刷新页面。
 
-本版实际检查结果见 [TESTING.md](TESTING.md) 的 Alpha.13 节。公开仓库、npm 和市场投稿尚未执行；实际构建、HTTP 媒体、真实 DSH 与市场本地静态检查分别记录，不把其中一项替代另一项。
+本版实际检查结果见 [TESTING.md](TESTING.md) 的 Alpha.13 节。GitHub 仓库、tag 与发行附件已公开，发现 topics 已设置；npm 与市场投稿尚未执行。实际构建、HTTP 媒体、真实 DSH 与市场本地静态检查分别记录，不把其中一项替代另一项。
 
-未专项验证 Windows 原生 IME、DSH Desktop／TUI、其他 DSH 版本和物理扬声器；固定 120 BPM 动画独立于歌曲，不宣称逐拍精确同步。当前文件为已准备的发布公告，远程 GitHub Release 和 npm 尚未发布。
+未专项验证 Windows 原生 IME、DSH Desktop／TUI、其他 DSH 版本和物理扬声器；固定 120 BPM 动画独立于歌曲，不宣称逐拍精确同步。GitHub 发行附件保留原验收 tarball 与对应源码归档，文档中的发布前状态反映当时记录；当前发布状态以本公告和仓库 README 为准。

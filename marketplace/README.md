@@ -1,6 +1,6 @@
 # 市场投稿草案
 
-这里保存待公开发布后使用的资料，**不是市场已经收录的记录**。本地生成这些文件不会自动提交到任何第三方，也不代表仓库、npm 包、Release 或远程 tag 已存在。各市场的核对结果与限制见 [收录准备](../docs/MARKETPLACE.md)。
+这里保存市场投稿资料，**不是市场已经收录的记录**。GitHub 仓库、Alpha.13 tag 与发行附件已公开，远程 Topics 已设置；npm 尚未发布，各市场尚未提交。各市场的核对结果与限制见 [收录准备](../docs/MARKETPLACE.md)。
 
 | 文件 | 发布后用途 |
 | --- | --- |
@@ -10,7 +10,7 @@
 | `dsh-pub/submissions/doveli-gu--dsh-dyou-wine.json` | Alpha.13 拆分包内媒体、保留真实编译入口，本地候选已通过其 1 MB 与 bundle 契约检查；最终 Git 提交及公开远程检查后才可投稿，当前仍 pending |
 | `submission-copy.md` | 各网站表单／Issue 的统一介绍、安装目标及真实验证边界 |
 
-创建并上传真实仓库后，用有管理权限且已登录的 GitHub CLI 设置 Topics（命令会修改远程仓库）：
+远程 Topics 已按本目录 JSON 设置；后续可用有管理权限且已登录的 GitHub CLI 更新（命令会修改远程仓库）：
 
 ```sh
 gh api --method PUT repos/DoveLi-Gu/dsh-dyou-wine/topics --input marketplace/github-topics.json
@@ -22,4 +22,4 @@ Alpha.13 将真实 `lib/host.js`、`lib/client.js` 与 `lib/assets/` 中的玩�
 
 投稿前确认远程 `v0.1.0-alpha.13` 和相应 Release tarball 实际可访问，再使用此处带 tag 的安装目标。Git 来源仍有 `prepare`，构建审批须遵循宿主和市场规则，不能仅因提交了产物就宣传免审一键安装；只有已经公开且通过扫描器核验的精确 npm tarball 才能作为无需源码构建的安装证据。
 
-官方新版 Discover 使用各运营方提供的 format 1 索引。当前没有可公开解析的发行源，不生成包含假时间戳、假 Git commit 或未发布 npm 版本的“有效索引”。公开后按实际版本、源 commit、发布时间及 `engines.dsh` 向索引提供方登记。
+官方新版 Discover 使用各运营方提供的 format 1 索引。GitHub 发行源已公开，但尚未指定目标索引，不生成含未发布 npm 版本的“有效索引”。向索引运营方登记时使用真实版本、源 commit、发布时间及 `engines.dsh`。

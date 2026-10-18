@@ -41,4 +41,4 @@ BGM 播放不得产生平台媒体请求或 iframe；验证正确音轨、来源
 
 ## 分发与阶段
 
-正式名「D友の酒 · Dyou Wine」，候选版本 `0.1.0-alpha.13`，包名 `dsh-dyou-wine`。发布目标为已核对账号下的 `DoveLi-Gu/dsh-dyou-wine`，npm 默认使用 `alpha` tag；仓库元数据、图标、中英文发现名称、CI 与发布公告均随源码提供。编译后的真实入口和静态媒体随源码及 npm 分发，单个程序入口保持在 dsh.pub 的 1,000,000 bytes 限制内；总包体积不受这个入口阈值约束。最终检验与日常安装记录单列于 `docs/TESTING.md`；尚未创建候选的远程仓库或执行 npm 公开发布。音频与角色图的来源和权利范围见 [素材说明](docs/ASSETS.md)。
+正式名「D友の酒 · Dyou Wine」，版本 `0.1.0-alpha.13`，包名 `dsh-dyou-wine`，GitHub 仓库为 `DoveLi-Gu/dsh-dyou-wine`。源码、tag 与发行附件已公开，发现 topics 已设置；npm 尚未发布，预发布仍使用 `alpha` tag。仓库元数据、图标、中英文发现名称、CI 与发布公告均随源码提供。编译后的真实入口和静态媒体进入 Git 与安装包，单个程序入口保持在 dsh.pub 的 1,000,000 bytes 限制内；总包体积不受这个入口阈值约束。最终检验与日常安装记录单列于 `docs/TESTING.md`。音频与角色图的来源和权利范围见 [素材说明](docs/ASSETS.md)。

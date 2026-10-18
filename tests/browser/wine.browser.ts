@@ -271,7 +271,8 @@ test('a protected region schedules neutral reentry on the shared native timeline
 });
 
 test('a main-thread long task does not make native animation time stall or need per-frame seeks', async ({ page }) => {
-  const evidence = await page.evaluate(async () => {
+  const blockingMs = 280;
+  const evidence = await page.evaluate(async (blockingMs) => {
     window.__wineFixture.unmount();
     const engineModule = '/src/motion/engine.ts';
     const settingsModule = '/src/settings.ts';
@@ -282,42 +283,63 @@ test('a main-thread long task does not make native animation time stall or need 
     const origin = performance.now();
     const errors: string[] = [];
     const engine = new WineEngine(document, () => (performance.now() - origin) / 1000, (error: Error) => errors.push(error.message));
-    const frame = () => new Promise<void>(done => requestAnimationFrame(() => done()));
+    const frame = () => new Promise<number>(done => requestAnimationFrame(done));
     engine.start(defaults);
     try {
       await frame(); await frame();
       const roots = ['#user-message', '#assistant-message', '#composer-card', '#sidebar-session'];
       const animations = roots.map(selector => document.querySelector(selector)!.getAnimations().find(animation => animation.id.startsWith('dsh-dyou-wine:'))!);
       await Promise.all(animations.map(animation => animation.ready));
-      const read = () => ({ timeline: Number(document.timeline.currentTime),
+      const baselineFrameTimes: number[] = [];
+      for (let index = 0; index < 7; index++) baselineFrameTimes.push(await frame());
+      const baselineIntervalsMs = baselineFrameTimes.slice(1).map((time, index) => time - baselineFrameTimes[index]);
+      const sortedIntervals = [...baselineIntervalsMs].sort((left, right) => left - right);
+      const medianFrameMs = (sortedIntervals[2] + sortedIntervals[3]) / 2;
+      // Both samples can land on adjacent rendering boundaries. Allow two
+      // measured frames plus clock rounding, capped at two 30 Hz frames so
+      // an overloaded baseline cannot excuse a genuinely stalled timeline.
+      const frameIntervalMs = Math.min(1000 / 30, Math.max(1000 / 120, medianFrameMs));
+      const samplingAllowanceMs = 2 * frameIntervalMs + 1;
+      const read = () => ({ wallMs: performance.now(), timeline: Number(document.timeline.currentTime),
         currentTimes: animations.map(animation => Number(animation.currentTime)),
         startTimes: animations.map(animation => Number(animation.startTime)),
         states: animations.map(animation => animation.playState),
         progress: animations.map(animation => animation.effect!.getComputedTiming().progress),
       });
       const before = read();
+      const block = { startWallMs: 0, endWallMs: 0, elapsedMs: 0 };
       // Do not inspect timeline/currentTime inside this stack: browsers are
       // allowed to expose the same sampled timeline time throughout one task.
       // A previously queued rAF may still carry a pre-task timestamp. Wait for
       // the following rendering opportunity before assessing elapsed time.
       await new Promise<void>(done => setTimeout(() => {
-        const end = performance.now() + 280;
+        block.startWallMs = performance.now();
+        const end = block.startWallMs + blockingMs;
         while (performance.now() < end) { /* deliberate test-only long task */ }
+        block.endWallMs = performance.now();
+        block.elapsedMs = block.endWallMs - block.startWallMs;
         requestAnimationFrame(() => done());
       }, 0));
       await frame();
       const after = read();
       await frame();
       const following = read();
-      return { errors, before, after, following, explicitSeeks,
+      const wallElapsedMs = after.wallMs - before.wallMs;
+      const timelineElapsedMs = after.timeline - before.timeline;
+      return { errors, before, after, following, explicitSeeks, block,
+        baselineIntervalsMs, medianFrameMs, frameIntervalMs, samplingAllowanceMs,
+        wallElapsedMs, timelineElapsedMs, samplingDriftMs: wallElapsedMs - timelineElapsedMs,
         identitiesKept: roots.every((selector, index) => document.querySelector(selector)!.getAnimations().includes(animations[index])) };
     } finally { engine.stop(); Object.defineProperty(Animation.prototype, 'currentTime', descriptor); }
-  });
+  }, blockingMs);
   await writeFile(join('.qa', 'native-timeline-long-task.json'), JSON.stringify({ kind: 'synthetic-fixture-long-task', ...evidence }, null, 2));
   expect(evidence.errors).toEqual([]);
   expect(evidence.identitiesKept).toBe(true);
   expect(evidence.explicitSeeks).toBe(0);
-  expect(evidence.after.timeline - evidence.before.timeline).toBeGreaterThanOrEqual(270);
+  expect(evidence.block.elapsedMs).toBeGreaterThanOrEqual(blockingMs);
+  expect(evidence.samplingAllowanceMs).toBeLessThanOrEqual(2 * (1000 / 30) + 1);
+  expect(Math.abs(evidence.samplingDriftMs)).toBeLessThanOrEqual(evidence.samplingAllowanceMs);
+  expect(evidence.timelineElapsedMs).toBeGreaterThanOrEqual(evidence.block.elapsedMs - evidence.samplingAllowanceMs);
   for (let index = 0; index < 4; index++) {
     expect(evidence.after.currentTimes[index] - evidence.before.currentTimes[index])
       .toBeCloseTo(evidence.after.timeline - evidence.before.timeline, 4);
