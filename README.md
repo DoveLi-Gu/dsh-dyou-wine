@@ -1,5 +1,7 @@
 # D友の酒 · Dyou Wine
 
+[![DSH Market · 已收录](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-zh.svg)](https://dsh.market/?q=DoveLi-Gu%2Fdsh-dyou-wine)
+
 **代码在跑，大肥鱼娘也在跑。**
 
 给 DeepSeek Harness（DSH）Web 加一点快乐：界面按固定节奏 Q 弹，蓝白鲸鱼娘毛绒玩偶满屏巡航，碰到墙就弹回来。两个效果独立开关，也能一起蹦。
@@ -153,7 +155,7 @@ npm 的 README 随版本保存，GitHub main 的文案更新不会改写旧包�
 
 市场发现保留 `dsh-plugin` npm 关键词、`dsh.bundle`、已验证的 `engines.dsh`、中英文名称说明和图标；根 `screenshots.json` 指向真实画面。远程已设置 `dsh-plugin` Topic 与另外 8 个相关主题。
 
-累计八项正式投稿（三个 PR、三个 Issue、两个网页表单）。[dsh.pub](https://dsh.pub/zh/plugins/dsh-dyou-wine/)、w211 与 [dshplugin.online](https://dshplugin.online/plugins/doveli-gu--dsh-dyou-wine) 已可查到 Alpha.13 快照，dsh-find-plugin 的实时 Community 搜索也能找到本插件；最新 Alpha.14 尚未同步到这些静态目录。本轮更新原三个 Issue 和 [ydhrdh PR #17](https://github.com/ydhrdh/dsh-marketplace/pull/17) 的版本资料，另补投 [Britneycode PR #1](https://github.com/Britneycode/dsh-update-center/pull/1)。其余审核、表单队列、Hub 预检故障与 Awesome 准入限制见 [市场状态](docs/MARKETPLACE.md)；社区来源和自动契约检查不等于人工审核。
+大肥鱼娘正在陆续进市场：10 月 19 日，[DSH Market 已确认收录](https://github.com/2BingLing/dsh-market/issues/255)，[DSH Marketplace](https://dshmarketplace.dev/plugins?q=dsh-dyou-wine) 已能搜索并提供 npm 安装，[dshx](https://dshx.io/zh/plugins/dsh-dyou-wine) 已展示 Alpha.14。[dsh.pub](https://dsh.pub/zh/plugins/dsh-dyou-wine/)、w211 和 [dshplugin.online](https://dshplugin.online/plugins/doveli-gu--dsh-dyou-wine) 保留既有目录快照。市场收录、版本同步和实际运行验收是不同进度；其余投稿、Hub 预检故障与 Awesome 准入条件见 [市场状态](docs/MARKETPLACE.md)。
 
 开发命令：
 

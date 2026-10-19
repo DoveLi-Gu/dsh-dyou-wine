@@ -15,6 +15,17 @@
 
 本次未重跑真实 DSH、60 秒性能对照或物理扬声器验收，也未更新用户日常 DSH。运行入口和媒体逐字节相同，真实宿主功能证据沿用下方单列的 Alpha.13 历史，不能称为本版新实测。原包、tag 与七项市场回执保留，市场条目未因此自动完成新版审核。
 
+## 2026-10-19 收录徽章与市场复核
+
+README 标题下方新增 DSH Market 官方蓝色「已收录」徽章，点击进入本仓库的市场搜索；依据为 Issue #255 的 `accepted` 标签与机器人明确收录回复。本次只更新文档和目录投稿材料，未修改版本、源码、编译产物或素材，未重发 npm。
+
+- 现有 PR／Issue 状态、静态目录、npm 元数据与实际网页分别复核。DSH Marketplace 搜索返回 1 条，官方 API 的 `installable: true`，但 `installCheck: null`，不称为沙箱实测；dshx 详情显示 Alpha.14。DSH Market 已接受投稿，其网页同步仍待确认。
+- 本地 `npm run marketplace:check` 与 `npm run pack:check` 通过；包检查使用 `--dry-run --ignore-scripts`，不生成或覆盖历史 tarball，不代表新 npm 发布。运行时代码未变，因此未重复真实 DSH、音频、动画或性能专项。
+- 网络错误的入口保留为未确认，未把请求失败当作未收录；已有待审 PR 无修改请求或冲突时未重复投稿。具体门槛和链接见 [MARKETPLACE.md](MARKETPLACE.md)。
+- DshMarketPlace 精选 [PR #19](https://github.com/DshMarketPlace/awesome-dsh-plugin/pull/19) 按固定上游 `ea92dcf` 准备，官方离线 `npm test` 通过 4 项单测、64 条缓存校验及双语生成，第二次生成无差异。原有 63 条缓存逐字节保留，新增条目取真实官方 API；默认联网测试超时，补充 65 次真实请求仅 41 次成功、24 次 TLS／超时失败，不宣称全量实时校验通过。这属于第三方目录材料验证，不是插件运行测试；独立远程检查按实际状态另记。
+
+原始证据在 `.qa/marketplace-audit-20261019/`。历史发行 tag 和附件保留；新提交的远程 CI 状态按实际运行单独核对。
+
 ## 2026-10-18 市场状态再审计
 
 本轮仅更新 GitHub 状态文档和第三方目录投稿材料，不修改插件版本、运行时代码或素材，不重发 npm。Alpha.14 公开版本为 `0.1.0-alpha.14`，Git tag 指向 `611f4e7d8e8d71f22c60e9cfa4b374c97bc20c56`；公开 `alpha`／`latest` 均指向 Alpha.14。历史发布产物不覆盖。

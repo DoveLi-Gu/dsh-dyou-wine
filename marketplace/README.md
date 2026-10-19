@@ -1,8 +1,8 @@
 # 市场投稿资料
 
-这里保存市场投稿资料；是否收录以各市场实际记录为准。Alpha.14 的 GitHub tag、发行附件与 npm 确切版本已公开，远程 Topics 已设置；公开 `alpha`／`latest` 均指向 Alpha.14，版本仍是 Alpha。累计完成八项正式投稿（三个 PR、三个 Issue、两个网页表单）；目录同步、审核和每项回执见 [市场状态](../docs/MARKETPLACE.md)。
+这里保存市场投稿资料；是否收录以各市场实际记录为准。Alpha.14 的 GitHub tag、发行附件与 npm 确切版本已公开，远程 Topics 已设置；公开 `alpha`／`latest` 均指向 Alpha.14，版本仍是 Alpha。累计完成九项正式投稿（四个 PR、三个 Issue、两个网页表单）；目录同步、审核和每项回执见 [市场状态](../docs/MARKETPLACE.md)。
 
-本轮将原三个 Issue 正文与 ydhrdh PR 更新到 Alpha.14，并新增 [Britneycode 补漏 PR #1](https://github.com/Britneycode/dsh-update-center/pull/1)；没有重复创建原投稿。dsh.pub、w211 与 dshplugin.online 当前显示 Alpha.13 快照，不能把包版本更新当作目录同步或人工审核。Hub 的维护者反馈仍不计为正式候选。
+10 月 19 日复核：DSH Market 的 [Issue #255](https://github.com/2BingLing/dsh-market/issues/255) 已接受并自动关闭，README 已加官方蓝色收录徽章；[DSH Marketplace](https://dshmarketplace.dev/plugins?q=dsh-dyou-wine) 已有可安装 npm 条目，[dshx](https://dshx.io/zh/plugins/dsh-dyou-wine) 已显示 Alpha.14。ydhrdh 与 [Britneycode PR #1](https://github.com/Britneycode/dsh-update-center/pull/1) 仍待维护者处理，无冲突或修改请求。dsh.pub、w211 与 dshplugin.online 保留既有来源快照；Hub 预检仍不可用，其维护者反馈不计为正式候选。
 
 | 文件 | 发布后用途 |
 | --- | --- |
@@ -18,7 +18,7 @@
 gh api --method PUT repos/DoveLi-Gu/dsh-dyou-wine/topics --input marketplace/github-topics.json
 ```
 
-`dsh-market` 使用 Awesome 上游目录，`dsh-find-plugin` 直接搜索 Topic；无需向同源的每个界面重复投稿。`DshMarketPlace/awesome-dsh-plugin` 是另一份精选列表，应按它的贡献指南编辑分类并运行其检查，不能把上述 YAML 当作通用格式。
+`dsh-market` 使用 Awesome 上游目录，`dsh-find-plugin` 直接搜索 Topic；无需向同源的每个界面重复投稿。`DshMarketPlace/awesome-dsh-plugin` 是另一份精选列表：本轮主目录条件满足后已提交 [PR #19](https://github.com/DshMarketPlace/awesome-dsh-plugin/pull/19)，官方离线校验与生成幂等通过，默认联网校验超时的边界已写明；待其独立 CI 和维护者审核，不能把上述 YAML 当作通用格式。
 
 Alpha.13 将真实 `lib/host.js`、`lib/client.js` 与 `lib/assets/` 中的玩偶／音轨一并纳入 Git 发布源。客户端约 80 KB，媒体通过本机 DSH `webServer` 固定路由加载，媒体原文件仍随包分发；并非空壳入口或远程执行代码。最终 commit 后须再次从 Git blob 核对文件存在和内容，工作树候选通过不能替代远程默认分支检查。
 
